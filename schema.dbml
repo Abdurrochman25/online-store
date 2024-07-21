@@ -1,0 +1,99 @@
+Table users {
+    id serial [primary key]
+    username varchar(50)
+    email varchar(50)
+    password varchar(50)
+    last_authenticated_at timestamp
+    role_id int2
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+}
+
+Table roles {
+    id serial [primary key]
+    name varchar(20)
+    created_at timestamp
+}
+
+Table permissions {
+    id serial [primary key]
+    name varchar(20)
+    created_at timestamp
+}
+
+Table role_permissions {
+    id serial [primary key]
+    role_id int2
+    permission_id int2
+}
+
+Table customers {
+    id serial [primary key]
+    full_name varchar(50)
+    username varchar(50)
+    email varchar(50)
+    phone_number int2
+    address varchar(200)
+    zip_code int2
+    longitude int2
+    latitude int2
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+}
+
+Table products {
+    id serial [primary key]
+    name varchar(20)
+    price int2
+    qty int
+    description varchar(255)
+    created_at timestamp
+}
+
+Table product_tags {
+    id serial [primary key]
+    product_id int2
+    tag_id int2
+    created_at timestamp
+}
+
+Table tags {
+    id serial [primary key]
+    name varchar(20)
+    description varchar(255)
+    created_at timestamp
+}
+
+Table carts {
+    id serial [primary key]
+    user_id int2
+    product_id int2
+    qty int
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+}
+
+Table orders {
+    id serial [primary key]
+    customer_id int2
+    product_id int2
+    qty int2
+    order_detail varchar(50)
+    status enum
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+}
+
+Ref: users.role_id > roles.id
+Ref: role_permissions.role_id > roles.id
+Ref: role_permissions.permission_id > permissions.id
+Ref: carts.user_id > users.id
+Ref: carts.product_id > products.id
+Ref: orders.customer_id > customers.id
+Ref: orders.product_id > products.id
+Ref: product_tags.product_id > products.id
+Ref: product_tags.tag_id > tags.id

@@ -1,0 +1,8 @@
+output = "internal/domain"
+
+[psql]
+dbname = "testdb"
+user = "testuser"
+pass = "testpassword"
+host = "testhost"
+sslmode = "disable"
