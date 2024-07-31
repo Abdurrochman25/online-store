@@ -54,14 +54,6 @@ func (ac *AuthConfig) CustomAuthentication() fiber.Handler {
 			JWTAlg: jwt.SigningMethodHS256.Name,
 			Key:    []byte(ac.config.AppSecret),
 		},
-		// SigningKeys: map[string]jwtware.SigningKey{
-		// 	"v1": {
-		// 		JWTAlg: jwt.SigningMethodHS256.Name,
-		// 		Key:    []byte(ac.config.AppSecret),
-		// 	},
-		// },
-		// TokenLookup:    "header:Authorization",
-		// AuthScheme:     "Bearer ",
 		KeyFunc:        ac.parseToken,
 		SuccessHandler: ac.successHandler,
 		ErrorHandler:   ac.errorHandler,

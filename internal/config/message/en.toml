@@ -1,0 +1,11 @@
+[http]
+200_read = "The data has been successfully retrieved"
+200_write = "The data has been successfully saved"
+200_update = "The data has been successfully updated"
+200_delete = "The data has been successfully deleted"
+400 = "Data validation is incorrect, please check again"
+401 = "Access denied due to invalid credential"
+403 = "You don't have permission to access this resource"
+404 = "Data not found"
+408 = "Request timeout"
+500 = "Something went wrong, please contact the administrator"

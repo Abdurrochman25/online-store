@@ -1,0 +1,11 @@
+[http]
+200_read = "Berhasil mendapatkan data"
+200_write = "Data telah berhasil disimpan"
+200_update = "Data telah berhasil diperbarui"
+200_delete = "Data telah berhasil dihapus"
+400 = "Validasi data kamu ada yang tidak sesuai, silakan periksa kembali"
+401 = "Akses ditolak karena kredensial tidak valid"
+403 = "Anda tidak memiliki izin untuk mengakses layanan ini"
+404 = "Data tidak ditemukan"
+408 = "Permintaan melebihi batas waktu, silahkan coba lagi"
+500 = "Mohon maaf terjadi kesalahan, silahkan hubungi administrator"

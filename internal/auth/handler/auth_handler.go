@@ -36,5 +36,5 @@ func (h *authHandler) Login(c *fiber.Ctx) error {
 		return h.InternalServerError(c)
 	}
 
-	return h.OK(c, token)
+	return h.OK(c, common.ActionRead, token)
 }

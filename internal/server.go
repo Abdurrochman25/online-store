@@ -12,6 +12,7 @@ import (
 	"github.com/Abdurrochman25/online-store/internal/middleware"
 	"github.com/Abdurrochman25/online-store/internal/router"
 	"github.com/Abdurrochman25/online-store/pkg/common"
+	"github.com/gofiber/contrib/fiberi18n/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -37,6 +38,9 @@ func Init() {
 
 	s.Fiber.Use(middleware.RequestIDMiddleware())
 
+	// Setting Localize
+	s.Fiber.Use(middleware.LocalizeMiddleware())
+
 	// Setting Authentication
 	customMiddleware := middleware.NewAuthConfig(&conf)
 	s.Fiber.Use(customMiddleware.CustomAuthentication())
@@ -48,7 +52,7 @@ func Init() {
 		Routes: []fiber.Router{
 			s.Fiber.Get("/", s.Authorization.RequiresPermissions([]string{"welcome:read"}),
 				func(c *fiber.Ctx) error {
-					return c.SendString("Hello World!")
+					return c.SendString(fiberi18n.MustLocalize(c, "http.200_read"))
 				}),
 		},
 	}

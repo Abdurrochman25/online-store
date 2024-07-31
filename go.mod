@@ -17,6 +17,9 @@ require (
 	github.com/casbin/casbin/v2 v2.98.0 // indirect
 	github.com/casbin/govaluate v1.2.0 // indirect
 	github.com/gofiber/contrib/casbin v1.0.15 // indirect
+	github.com/gofiber/contrib/fiberi18n/v2 v2.0.4 // indirect
+	github.com/nicksnyder/go-i18n/v2 v2.4.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
 require (
@@ -47,6 +50,7 @@ require (
 )
 
 require (
+	github.com/BurntSushi/toml v1.4.0
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/joho/godotenv v1.5.1

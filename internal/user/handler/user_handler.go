@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/Abdurrochman25/online-store/internal/config"
 	"github.com/Abdurrochman25/online-store/internal/user/models"
 	"github.com/Abdurrochman25/online-store/internal/user/repository"
@@ -34,8 +32,8 @@ func (h *userHTTPHandler) findAllUser(c *fiber.Ctx) error {
 
 	users, err := h.userUseCase.FindAll(c.Context(), userRequest)
 	if err != nil {
-		return c.JSON(c.Status(http.StatusInternalServerError))
+		return h.InternalServerError(c)
 	}
 
-	return h.OK(c, users)
+	return h.OK(c, common.ActionRead, users)
 }

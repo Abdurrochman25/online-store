@@ -1,9 +1,12 @@
 package common
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/gofiber/contrib/fiberi18n/v2"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 )
 
 type HTTPHandler struct{}
@@ -37,17 +40,18 @@ type Metadata struct {
 }
 
 func (h *HTTPHandler) Response(c *fiber.Ctx, statusCode int, message string) error {
+	log.Info(message)
 	return c.Status(http.StatusOK).JSON(HTTPResponse{
 		Code:      "OLS-" + GetErrorCode(statusCode),
-		Message:   message,
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", statusCode)),
 		RequestID: GetRequestID(c),
 	})
 }
 
-func (h *HTTPHandler) OK(c *fiber.Ctx, data interface{}) error {
+func (h *HTTPHandler) OK(c *fiber.Ctx, action string, data interface{}) error {
 	return c.Status(http.StatusOK).JSON(HTTPResponse{
 		Code:      "OLS-" + OK,
-		Message:   "Operation successfully executed",
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d.%s", http.StatusOK, action)),
 		Data:      data,
 		RequestID: GetRequestID(c),
 	})
@@ -56,7 +60,7 @@ func (h *HTTPHandler) OK(c *fiber.Ctx, data interface{}) error {
 func (h *HTTPHandler) Unauthorized(c *fiber.Ctx) error {
 	return c.Status(http.StatusUnauthorized).JSON(HTTPResponse{
 		Code:      "OLS-" + Unauthorized,
-		Message:   "Access denied due to invalid credential",
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusUnauthorized)),
 		RequestID: GetRequestID(c),
 	})
 }
@@ -64,7 +68,7 @@ func (h *HTTPHandler) Unauthorized(c *fiber.Ctx) error {
 func (h *HTTPHandler) Forbidden(c *fiber.Ctx) error {
 	return c.Status(http.StatusForbidden).JSON(HTTPResponse{
 		Code:      "OLS-" + Forbidden,
-		Message:   "You don't have permission to access this resource",
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusForbidden)),
 		RequestID: GetRequestID(c),
 	})
 }
@@ -72,7 +76,7 @@ func (h *HTTPHandler) Forbidden(c *fiber.Ctx) error {
 func (h *HTTPHandler) BadRequest(c *fiber.Ctx) error {
 	return c.Status(http.StatusBadRequest).JSON(HTTPResponse{
 		Code:      "OLS-" + BadRequest,
-		Message:   "Invalid request",
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusBadRequest)),
 		RequestID: GetRequestID(c),
 	})
 }
@@ -80,7 +84,7 @@ func (h *HTTPHandler) BadRequest(c *fiber.Ctx) error {
 func (h *HTTPHandler) NotFound(c *fiber.Ctx) error {
 	return c.Status(http.StatusNotFound).JSON(HTTPResponse{
 		Code:      "OLS-" + NotFound,
-		Message:   "Resource not found",
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusNotFound)),
 		RequestID: GetRequestID(c),
 	})
 }
@@ -88,7 +92,7 @@ func (h *HTTPHandler) NotFound(c *fiber.Ctx) error {
 func (h *HTTPHandler) InternalServerError(c *fiber.Ctx) error {
 	return c.Status(http.StatusInternalServerError).JSON(HTTPResponse{
 		Code:      "OLS-" + InternalServerError,
-		Message:   "There's something wrong, please contact the administrator",
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusInternalServerError)),
 		RequestID: GetRequestID(c),
 	})
 }
