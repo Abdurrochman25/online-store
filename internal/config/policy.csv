@@ -1,0 +1,6 @@
+p,admin,welcome,read
+p,admin,/v1/users,GET
+p,user,/,GET
+
+g,test,admin
+g,test,user

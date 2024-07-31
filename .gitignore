@@ -1,6 +1,9 @@
 # Env file
-.env
+*.env
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 cover.html
+
+# Program binaries
+*.exe

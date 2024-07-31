@@ -14,8 +14,17 @@ require (
 )
 
 require (
+	github.com/casbin/casbin/v2 v2.98.0 // indirect
+	github.com/casbin/govaluate v1.2.0 // indirect
+	github.com/gofiber/contrib/casbin v1.0.15 // indirect
+)
+
+require (
+	github.com/MicahParks/keyfunc/v2 v2.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
+	github.com/gofiber/contrib/jwt v1.0.10
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
@@ -34,7 +43,7 @@ require (
 	golang.org/x/text v0.16.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -45,10 +54,11 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.55.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
+	golang.org/x/crypto v0.25.0
 	golang.org/x/sys v0.22.0 // indirect
 )

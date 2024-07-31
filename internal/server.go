@@ -1,9 +1,7 @@
-package cmd
+package internal
 
 import (
 	"context"
-	"database/sql"
-	"log"
 	"os"
 	"os/signal"
 	"sync"
@@ -11,45 +9,18 @@ import (
 	"time"
 
 	"github.com/Abdurrochman25/online-store/internal/config"
+	"github.com/Abdurrochman25/online-store/internal/middleware"
 	"github.com/Abdurrochman25/online-store/internal/router"
+	"github.com/Abdurrochman25/online-store/pkg/common"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
-
-type Server struct {
-	Config config.Config
-	DB     *sql.DB
-	Fiber  *fiber.App
-	Router *router.Router
-}
-
-func NewServer(config config.Config) *Server {
-	return &Server{
-		Config: config,
-		DB:     nil,
-		Fiber:  nil,
-	}
-}
-
-func (s *Server) NewDB(ctx context.Context) error {
-	db, err := sql.Open("postgres", s.Config.Database.ConnectionString())
-	if err != nil {
-		return err
-	}
-
-	if err := db.PingContext(ctx); err != nil {
-		return err
-	}
-
-	s.DB = db
-
-	log.Println("database successfully connected")
-	return nil
-}
 
 func Init() {
 	conf := config.NewConfig()
 
-	s := NewServer(conf)
+	s := config.NewServer(conf)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	if err := s.NewDB(ctx); err != nil {
@@ -62,14 +33,32 @@ func Init() {
 		Immutable: true,
 	})
 
-	s.Router = &router.Router{
+	s.Fiber.Use(logger.New())
+
+	s.Fiber.Use(middleware.RequestIDMiddleware())
+
+	// Setting Authentication
+	customMiddleware := middleware.NewAuthConfig(&conf)
+	s.Fiber.Use(customMiddleware.CustomAuthentication())
+
+	// Setting Authorization
+	s.Authorization = middleware.NewAuthzConfig().CustomAuthorization()
+
+	s.Router = &config.Router{
 		Routes: []fiber.Router{
-			s.Fiber.Get("/", func(c *fiber.Ctx) error {
-				return c.SendString("Hello World!")
-			}),
+			s.Fiber.Get("/", s.Authorization.RequiresPermissions([]string{"welcome:read"}),
+				func(c *fiber.Ctx) error {
+					return c.SendString("Hello World!")
+				}),
 		},
 	}
 
+	router.AttachAllRoutes(s)
+
+	// Custom 404 Handler
+	s.Fiber.Use(func(c *fiber.Ctx) error {
+		return common.NewHTTPHandler().NotFound(c)
+	})
 	log.Fatal(s.Fiber.Listen(":3000"))
 }
 
@@ -86,11 +75,11 @@ func Shutdown(ctx context.Context, timeout time.Duration, ops map[string]Operati
 		signal.Notify(s, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 		<-s
 
-		log.Println("Shutting down")
+		log.Infof("Shutting down")
 
 		// set timeout for the ops to be done to prevent system hang
 		timeoutFunc := time.AfterFunc(timeout, func() {
-			log.Printf("Timeout %d ms has been elapsed, force exit", timeout.Milliseconds())
+			log.Warn("Timeout %d ms has been elapsed, force exit", timeout.Milliseconds())
 			os.Exit(0)
 		})
 
@@ -106,13 +95,13 @@ func Shutdown(ctx context.Context, timeout time.Duration, ops map[string]Operati
 			go func() {
 				defer wg.Done()
 
-				log.Printf("Cleaning up: %s", innerKey)
+				log.Info("Cleaning up: %s", innerKey)
 				if err := innerOp(ctx); err != nil {
-					log.Printf("%s: clean up failed: %s", innerKey, err.Error())
+					log.Warn("%s: clean up failed: %s", innerKey, err.Error())
 					return
 				}
 
-				log.Printf("%s was shutdown gracefully", innerKey)
+				log.Info("%s was shutdown gracefully", innerKey)
 			}()
 		}
 
