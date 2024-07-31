@@ -38,8 +38,13 @@ func Init() {
 
 	s.Fiber.Use(middleware.RequestIDMiddleware())
 
+	s.Fiber.Use(middleware.DefaultHeaderAcceptLanguage())
+
 	// Setting Localize
 	s.Fiber.Use(middleware.LocalizeMiddleware())
+
+	// Setting Validator
+	s.Fiber.Use(middleware.ValidatorMiddleware())
 
 	// Setting Authentication
 	customMiddleware := middleware.NewAuthConfig(&conf)

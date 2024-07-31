@@ -1,9 +1,13 @@
 package common
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
+	"github.com/Abdurrochman25/online-store/internal/config"
+	"github.com/Abdurrochman25/online-store/pkg/constants"
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/contrib/fiberi18n/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
@@ -51,7 +55,7 @@ func (h *HTTPHandler) Response(c *fiber.Ctx, statusCode int, message string) err
 func (h *HTTPHandler) OK(c *fiber.Ctx, action string, data interface{}) error {
 	return c.Status(http.StatusOK).JSON(HTTPResponse{
 		Code:      "OLS-" + OK,
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d.%s", http.StatusOK, action)),
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d_%s", http.StatusOK, action)),
 		Data:      data,
 		RequestID: GetRequestID(c),
 	})
@@ -60,7 +64,7 @@ func (h *HTTPHandler) OK(c *fiber.Ctx, action string, data interface{}) error {
 func (h *HTTPHandler) Unauthorized(c *fiber.Ctx) error {
 	return c.Status(http.StatusUnauthorized).JSON(HTTPResponse{
 		Code:      "OLS-" + Unauthorized,
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusUnauthorized)),
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusUnauthorized)),
 		RequestID: GetRequestID(c),
 	})
 }
@@ -68,15 +72,30 @@ func (h *HTTPHandler) Unauthorized(c *fiber.Ctx) error {
 func (h *HTTPHandler) Forbidden(c *fiber.Ctx) error {
 	return c.Status(http.StatusForbidden).JSON(HTTPResponse{
 		Code:      "OLS-" + Forbidden,
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusForbidden)),
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusForbidden)),
 		RequestID: GetRequestID(c),
 	})
 }
 
-func (h *HTTPHandler) BadRequest(c *fiber.Ctx) error {
+func (h *HTTPHandler) BadRequest(c *fiber.Ctx, err error) error {
+	var errValidations []HTTPErrorResponse
+	var errorValidator validator.ValidationErrors
+
+	validate := c.Locals(constants.CtxKeyValidator).(*config.CustomValidator)
+	if errors.As(err, &errorValidator) {
+		errValidations := make([]HTTPErrorResponse, 0)
+		for _, err := range err.(validator.ValidationErrors) {
+			errValidations = append(errValidations, HTTPErrorResponse{
+				Parameter: err.Field(),
+				Message:   err.Translate(validate.DefaultTrans),
+			})
+		}
+	}
+
 	return c.Status(http.StatusBadRequest).JSON(HTTPResponse{
 		Code:      "OLS-" + BadRequest,
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusBadRequest)),
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusBadRequest)),
+		Errors:    errValidations,
 		RequestID: GetRequestID(c),
 	})
 }
@@ -84,7 +103,7 @@ func (h *HTTPHandler) BadRequest(c *fiber.Ctx) error {
 func (h *HTTPHandler) NotFound(c *fiber.Ctx) error {
 	return c.Status(http.StatusNotFound).JSON(HTTPResponse{
 		Code:      "OLS-" + NotFound,
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusNotFound)),
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusNotFound)),
 		RequestID: GetRequestID(c),
 	})
 }
@@ -92,7 +111,7 @@ func (h *HTTPHandler) NotFound(c *fiber.Ctx) error {
 func (h *HTTPHandler) InternalServerError(c *fiber.Ctx) error {
 	return c.Status(http.StatusInternalServerError).JSON(HTTPResponse{
 		Code:      "OLS-" + InternalServerError,
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", http.StatusInternalServerError)),
+		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusInternalServerError)),
 		RequestID: GetRequestID(c),
 	})
 }

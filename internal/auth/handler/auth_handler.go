@@ -5,7 +5,9 @@ import (
 	"github.com/Abdurrochman25/online-store/internal/auth/repository"
 	"github.com/Abdurrochman25/online-store/internal/auth/usecase"
 	"github.com/Abdurrochman25/online-store/internal/config"
+	"github.com/Abdurrochman25/online-store/internal/middleware"
 	"github.com/Abdurrochman25/online-store/pkg/common"
+	"github.com/Abdurrochman25/online-store/pkg/constants"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -28,7 +30,11 @@ func NewAuthHandler(s *config.Server) fiber.Router {
 func (h *authHandler) Login(c *fiber.Ctx) error {
 	loginRequest := new(models.LoginRequest)
 	if err := c.BodyParser(loginRequest); err != nil {
-		return h.BadRequest(c)
+		return h.BadRequest(c, err)
+	}
+
+	if err := middleware.ValidateStruct(c, loginRequest); err != nil {
+		return h.BadRequest(c, err)
 	}
 
 	token, err := h.authUseCase.Login(c.Context(), loginRequest)
@@ -36,5 +42,5 @@ func (h *authHandler) Login(c *fiber.Ctx) error {
 		return h.InternalServerError(c)
 	}
 
-	return h.OK(c, common.ActionRead, token)
+	return h.OK(c, constants.ActionRead, token)
 }

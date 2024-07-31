@@ -1,9 +1,4 @@
-package common
-
-const (
-	CtxKeyRequestID = "request_id"
-	CtxKeyI18n      = "fiberi18n"
-)
+package constants
 
 const (
 	ActionRead   = "read"

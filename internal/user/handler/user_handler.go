@@ -6,6 +6,7 @@ import (
 	"github.com/Abdurrochman25/online-store/internal/user/repository"
 	"github.com/Abdurrochman25/online-store/internal/user/usecase"
 	"github.com/Abdurrochman25/online-store/pkg/common"
+	"github.com/Abdurrochman25/online-store/pkg/constants"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -27,7 +28,7 @@ func NewUserHandler(s *config.Server) fiber.Router {
 func (h *userHTTPHandler) findAllUser(c *fiber.Ctx) error {
 	userRequest := new(models.GetUserRequest)
 	if err := c.QueryParser(userRequest); err != nil {
-		return h.BadRequest(c)
+		return h.BadRequest(c, err)
 	}
 
 	users, err := h.userUseCase.FindAll(c.Context(), userRequest)
@@ -35,5 +36,5 @@ func (h *userHTTPHandler) findAllUser(c *fiber.Ctx) error {
 		return h.InternalServerError(c)
 	}
 
-	return h.OK(c, common.ActionRead, users)
+	return h.OK(c, constants.ActionRead, users)
 }
