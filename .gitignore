@@ -7,3 +7,6 @@ cover.html
 
 # Program binaries
 *.exe
+
+# SQLBoiler script
+sqlboiler.toml

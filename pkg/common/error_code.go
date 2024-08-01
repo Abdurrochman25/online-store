@@ -21,5 +21,8 @@ var mapErrorCode = map[int]string{
 }
 
 func GetErrorCode(statusCode int) string {
+	if _, seen := mapErrorCode[statusCode]; !seen {
+		return InternalServerError
+	}
 	return mapErrorCode[statusCode]
 }

@@ -1,6 +1,8 @@
 package router
 
 import (
+	"slices"
+
 	authHandler "github.com/Abdurrochman25/online-store/internal/auth/handler"
 	"github.com/Abdurrochman25/online-store/internal/config"
 	userHandler "github.com/Abdurrochman25/online-store/internal/user/handler"
@@ -8,8 +10,9 @@ import (
 )
 
 func AttachAllRoutes(s *config.Server) {
-	s.Router.Routes = []fiber.Router{
-		authHandler.NewAuthHandler(s),
+	slices.Concat(
+		s.Router.Routes,
+		[]fiber.Router{authHandler.NewAuthHandler(s)},
 		userHandler.NewUserHandler(s),
-	}
+	)
 }

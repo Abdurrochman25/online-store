@@ -66,7 +66,7 @@ func Init() {
 
 	// Custom 404 Handler
 	s.Fiber.Use(func(c *fiber.Ctx) error {
-		return common.NewHTTPHandler().NotFound(c)
+		return common.NewHTTPHandler().NotFound(c, "http.404_url_not_found")
 	})
 	log.Fatal(s.Fiber.Listen(":3000"))
 }

@@ -7,5 +7,9 @@
 401 = "Access denied due to invalid credential"
 403 = "You don't have permission to access this resource"
 404 = "Data not found"
+404_url_not_found = "URL not found"
 408 = "Request timeout"
 500 = "Something went wrong, please contact the administrator"
+
+[validation]
+email_already_used = "Email already used"

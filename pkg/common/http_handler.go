@@ -80,30 +80,42 @@ func (h *HTTPHandler) Forbidden(c *fiber.Ctx) error {
 func (h *HTTPHandler) BadRequest(c *fiber.Ctx, err error) error {
 	var errValidations []HTTPErrorResponse
 	var errorValidator validator.ValidationErrors
+	message := fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusBadRequest))
 
 	validate := c.Locals(constants.CtxKeyValidator).(*config.CustomValidator)
-	if errors.As(err, &errorValidator) {
-		errValidations := make([]HTTPErrorResponse, 0)
+	switch {
+	case errors.As(err, &errorValidator):
 		for _, err := range err.(validator.ValidationErrors) {
 			errValidations = append(errValidations, HTTPErrorResponse{
 				Parameter: err.Field(),
 				Message:   err.Translate(validate.DefaultTrans),
 			})
 		}
+	default:
+		localizeMessage, errLocalize := fiberi18n.Localize(c, GetLocalizeTag(err))
+		if errLocalize != nil {
+			message = err.Error()
+		} else {
+			message = localizeMessage
+		}
 	}
 
 	return c.Status(http.StatusBadRequest).JSON(HTTPResponse{
 		Code:      "OLS-" + BadRequest,
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusBadRequest)),
+		Message:   message,
 		Errors:    errValidations,
 		RequestID: GetRequestID(c),
 	})
 }
 
-func (h *HTTPHandler) NotFound(c *fiber.Ctx) error {
+func (h *HTTPHandler) NotFound(c *fiber.Ctx, localizeMessage ...string) error {
+	message := fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusNotFound))
+	if len(localizeMessage) > 0 {
+		message = fiberi18n.MustLocalize(c, localizeMessage[0])
+	}
 	return c.Status(http.StatusNotFound).JSON(HTTPResponse{
 		Code:      "OLS-" + NotFound,
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusNotFound)),
+		Message:   message,
 		RequestID: GetRequestID(c),
 	})
 }

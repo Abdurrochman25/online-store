@@ -7,5 +7,9 @@
 401 = "Akses ditolak karena kredensial tidak valid"
 403 = "Anda tidak memiliki izin untuk mengakses layanan ini"
 404 = "Data tidak ditemukan"
+404_url_not_found = "Sumber daya tidak tersedia"
 408 = "Permintaan melebihi batas waktu, silahkan coba lagi"
 500 = "Mohon maaf terjadi kesalahan, silahkan hubungi administrator"
+
+[validation]
+email_already_used = "Email sudah digunakan"
