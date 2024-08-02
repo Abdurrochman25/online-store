@@ -10,7 +10,7 @@ import (
 
 func LocalizeMiddleware() fiber.Handler {
 	return fiberi18n.New(&fiberi18n.Config{
-		RootPath:         config.Path("/message"),
+		RootPath:         config.Path("./message"),
 		AcceptLanguages:  []language.Tag{language.English, language.Indonesian},
 		DefaultLanguage:  language.Indonesian,
 		FormatBundleFile: "toml",

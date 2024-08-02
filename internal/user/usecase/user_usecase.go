@@ -13,6 +13,8 @@ import (
 type IUserUseCase interface {
 	FindAll(ctx context.Context, userRequest *userModels.GetUserRequest) (models.UserSlice, error)
 	Create(ctx context.Context, userRequest *userModels.CreateUserRequest) (*models.User, error)
+	Update(ctx context.Context, userRequest *userModels.UpdateUserRequest) (*models.User, error)
+	Delete(ctx context.Context, userRequest *userModels.DeleteUserRequest) (*models.User, error)
 }
 
 type userUseCase struct {
@@ -39,4 +41,26 @@ func (uc *userUseCase) Create(ctx context.Context, userRequest *userModels.Creat
 		RoleID:   null.NewInt16(int16(userRequest.RoleID), userRequest.RoleID != 0),
 	}
 	return uc.userRepository.Create(ctx, user)
+}
+
+func (uc *userUseCase) Update(ctx context.Context, userRequest *userModels.UpdateUserRequest) (*models.User, error) {
+	hashedPassword, err := util.HashPassword(userRequest.Password)
+	if err != nil {
+		return nil, err
+	}
+	user := &models.User{
+		ID:       userRequest.ID,
+		Name:     null.StringFrom(userRequest.Name),
+		Email:    null.StringFrom(userRequest.Email),
+		Password: null.StringFrom(hashedPassword),
+		RoleID:   null.NewInt16(int16(userRequest.RoleID), userRequest.RoleID != 0),
+	}
+	return uc.userRepository.Update(ctx, user)
+}
+
+func (uc *userUseCase) Delete(ctx context.Context, userRequest *userModels.DeleteUserRequest) (*models.User, error) {
+	user := &models.User{
+		ID: userRequest.ID,
+	}
+	return uc.userRepository.Update(ctx, user)
 }

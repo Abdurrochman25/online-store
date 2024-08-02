@@ -12,7 +12,3 @@ func GetRequestID(c *fiber.Ctx) string {
 
 	return ""
 }
-
-// func GetValidator(c *fiber.Ctx) *middleware.CustomValidator {
-// 	return c.Locals(constants.CtxKeyValidator).(*middleware.CustomValidator)
-// }

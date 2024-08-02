@@ -13,3 +13,4 @@
 
 [validation]
 email_already_used = "Email already used"
+not_found = "{{.Field}} not found"

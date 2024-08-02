@@ -43,11 +43,50 @@ type Metadata struct {
 	} `json:"pagination"`
 }
 
+func (h *HTTPHandler) BindAndValidate(c *fiber.Ctx, out interface{}) error {
+	if err := h.Bind(c, out); err != nil {
+		return err
+	}
+
+	return h.Validate(c, out)
+}
+
+func (h *HTTPHandler) Bind(c *fiber.Ctx, out interface{}) error {
+	if err := c.ParamsParser(out); err != nil {
+		return err
+	}
+
+	method := c.Method()
+	if method == http.MethodGet || method == http.MethodDelete || method == http.MethodHead {
+		if err := c.QueryParser(out); err != nil {
+			return err
+		}
+	}
+
+	if string(c.Request().Header.ContentType()) != "" {
+		return c.BodyParser(out)
+	}
+
+	return nil
+}
+
+func (h *HTTPHandler) Validate(c *fiber.Ctx, out interface{}) error {
+	validate := c.Locals(constants.CtxKeyValidator).(*config.CustomValidator)
+	if errs := validate.Validate.Struct(out); errs != nil {
+		return errs
+	}
+
+	return nil
+}
+
 func (h *HTTPHandler) Response(c *fiber.Ctx, statusCode int, message string) error {
 	log.Info(message)
+	if statusCode != http.StatusBadRequest {
+		message = fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", statusCode))
+	}
 	return c.Status(http.StatusOK).JSON(HTTPResponse{
 		Code:      "OLS-" + GetErrorCode(statusCode),
-		Message:   fiberi18n.MustLocalize(c, fmt.Sprintf("%d", statusCode)),
+		Message:   message,
 		RequestID: GetRequestID(c),
 	})
 }
@@ -78,6 +117,7 @@ func (h *HTTPHandler) Forbidden(c *fiber.Ctx) error {
 }
 
 func (h *HTTPHandler) BadRequest(c *fiber.Ctx, err error) error {
+	log.Error(err.Error())
 	var errValidations []HTTPErrorResponse
 	var errorValidator validator.ValidationErrors
 	message := fiberi18n.MustLocalize(c, fmt.Sprintf("http.%d", http.StatusBadRequest))

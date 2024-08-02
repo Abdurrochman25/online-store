@@ -13,3 +13,4 @@
 
 [validation]
 email_already_used = "Email sudah digunakan"
+not_found = "{{.Field}} tidak ditemukan"
