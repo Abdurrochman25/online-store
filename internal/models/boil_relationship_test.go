@@ -8,8 +8,14 @@ import "testing"
 // TestToOne tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOne(t *testing.T) {
+	t.Run("CartToProductUsingProduct", testCartToOneProductUsingProduct)
+	t.Run("CartToUserUsingUser", testCartToOneUserUsingUser)
 	t.Run("MenuPermissionToMenuUsingMenu", testMenuPermissionToOneMenuUsingMenu)
 	t.Run("MenuPermissionToPermissionUsingPermission", testMenuPermissionToOnePermissionUsingPermission)
+	t.Run("OrderToProductUsingProduct", testOrderToOneProductUsingProduct)
+	t.Run("OrderToUserUsingUser", testOrderToOneUserUsingUser)
+	t.Run("ProductTagToProductUsingProduct", testProductTagToOneProductUsingProduct)
+	t.Run("ProductTagToTagUsingTag", testProductTagToOneTagUsingTag)
 	t.Run("RoleMenuPermissionToMenuPermissionUsingMenuPermission", testRoleMenuPermissionToOneMenuPermissionUsingMenuPermission)
 	t.Run("RoleMenuPermissionToRoleUsingRole", testRoleMenuPermissionToOneRoleUsingRole)
 	t.Run("UserToRoleUsingRole", testUserToOneRoleUsingRole)
@@ -25,15 +31,27 @@ func TestToMany(t *testing.T) {
 	t.Run("MenuPermissionToRoleMenuPermissions", testMenuPermissionToManyRoleMenuPermissions)
 	t.Run("MenuToMenuPermissions", testMenuToManyMenuPermissions)
 	t.Run("PermissionToMenuPermissions", testPermissionToManyMenuPermissions)
+	t.Run("ProductToCarts", testProductToManyCarts)
+	t.Run("ProductToOrders", testProductToManyOrders)
+	t.Run("ProductToProductTags", testProductToManyProductTags)
 	t.Run("RoleToRoleMenuPermissions", testRoleToManyRoleMenuPermissions)
 	t.Run("RoleToUsers", testRoleToManyUsers)
+	t.Run("TagToProductTags", testTagToManyProductTags)
+	t.Run("UserToCarts", testUserToManyCarts)
+	t.Run("UserToOrders", testUserToManyOrders)
 }
 
 // TestToOneSet tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOneSet(t *testing.T) {
+	t.Run("CartToProductUsingCarts", testCartToOneSetOpProductUsingProduct)
+	t.Run("CartToUserUsingCarts", testCartToOneSetOpUserUsingUser)
 	t.Run("MenuPermissionToMenuUsingMenuPermissions", testMenuPermissionToOneSetOpMenuUsingMenu)
 	t.Run("MenuPermissionToPermissionUsingMenuPermissions", testMenuPermissionToOneSetOpPermissionUsingPermission)
+	t.Run("OrderToProductUsingOrders", testOrderToOneSetOpProductUsingProduct)
+	t.Run("OrderToUserUsingOrders", testOrderToOneSetOpUserUsingUser)
+	t.Run("ProductTagToProductUsingProductTags", testProductTagToOneSetOpProductUsingProduct)
+	t.Run("ProductTagToTagUsingProductTags", testProductTagToOneSetOpTagUsingTag)
 	t.Run("RoleMenuPermissionToMenuPermissionUsingRoleMenuPermissions", testRoleMenuPermissionToOneSetOpMenuPermissionUsingMenuPermission)
 	t.Run("RoleMenuPermissionToRoleUsingRoleMenuPermissions", testRoleMenuPermissionToOneSetOpRoleUsingRole)
 	t.Run("UserToRoleUsingUsers", testUserToOneSetOpRoleUsingRole)
@@ -42,8 +60,14 @@ func TestToOneSet(t *testing.T) {
 // TestToOneRemove tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOneRemove(t *testing.T) {
+	t.Run("CartToProductUsingCarts", testCartToOneRemoveOpProductUsingProduct)
+	t.Run("CartToUserUsingCarts", testCartToOneRemoveOpUserUsingUser)
 	t.Run("MenuPermissionToMenuUsingMenuPermissions", testMenuPermissionToOneRemoveOpMenuUsingMenu)
 	t.Run("MenuPermissionToPermissionUsingMenuPermissions", testMenuPermissionToOneRemoveOpPermissionUsingPermission)
+	t.Run("OrderToProductUsingOrders", testOrderToOneRemoveOpProductUsingProduct)
+	t.Run("OrderToUserUsingOrders", testOrderToOneRemoveOpUserUsingUser)
+	t.Run("ProductTagToProductUsingProductTags", testProductTagToOneRemoveOpProductUsingProduct)
+	t.Run("ProductTagToTagUsingProductTags", testProductTagToOneRemoveOpTagUsingTag)
 	t.Run("RoleMenuPermissionToMenuPermissionUsingRoleMenuPermissions", testRoleMenuPermissionToOneRemoveOpMenuPermissionUsingMenuPermission)
 	t.Run("RoleMenuPermissionToRoleUsingRoleMenuPermissions", testRoleMenuPermissionToOneRemoveOpRoleUsingRole)
 	t.Run("UserToRoleUsingUsers", testUserToOneRemoveOpRoleUsingRole)
@@ -63,8 +87,14 @@ func TestToManyAdd(t *testing.T) {
 	t.Run("MenuPermissionToRoleMenuPermissions", testMenuPermissionToManyAddOpRoleMenuPermissions)
 	t.Run("MenuToMenuPermissions", testMenuToManyAddOpMenuPermissions)
 	t.Run("PermissionToMenuPermissions", testPermissionToManyAddOpMenuPermissions)
+	t.Run("ProductToCarts", testProductToManyAddOpCarts)
+	t.Run("ProductToOrders", testProductToManyAddOpOrders)
+	t.Run("ProductToProductTags", testProductToManyAddOpProductTags)
 	t.Run("RoleToRoleMenuPermissions", testRoleToManyAddOpRoleMenuPermissions)
 	t.Run("RoleToUsers", testRoleToManyAddOpUsers)
+	t.Run("TagToProductTags", testTagToManyAddOpProductTags)
+	t.Run("UserToCarts", testUserToManyAddOpCarts)
+	t.Run("UserToOrders", testUserToManyAddOpOrders)
 }
 
 // TestToManySet tests cannot be run in parallel
@@ -73,8 +103,14 @@ func TestToManySet(t *testing.T) {
 	t.Run("MenuPermissionToRoleMenuPermissions", testMenuPermissionToManySetOpRoleMenuPermissions)
 	t.Run("MenuToMenuPermissions", testMenuToManySetOpMenuPermissions)
 	t.Run("PermissionToMenuPermissions", testPermissionToManySetOpMenuPermissions)
+	t.Run("ProductToCarts", testProductToManySetOpCarts)
+	t.Run("ProductToOrders", testProductToManySetOpOrders)
+	t.Run("ProductToProductTags", testProductToManySetOpProductTags)
 	t.Run("RoleToRoleMenuPermissions", testRoleToManySetOpRoleMenuPermissions)
 	t.Run("RoleToUsers", testRoleToManySetOpUsers)
+	t.Run("TagToProductTags", testTagToManySetOpProductTags)
+	t.Run("UserToCarts", testUserToManySetOpCarts)
+	t.Run("UserToOrders", testUserToManySetOpOrders)
 }
 
 // TestToManyRemove tests cannot be run in parallel
@@ -83,6 +119,12 @@ func TestToManyRemove(t *testing.T) {
 	t.Run("MenuPermissionToRoleMenuPermissions", testMenuPermissionToManyRemoveOpRoleMenuPermissions)
 	t.Run("MenuToMenuPermissions", testMenuToManyRemoveOpMenuPermissions)
 	t.Run("PermissionToMenuPermissions", testPermissionToManyRemoveOpMenuPermissions)
+	t.Run("ProductToCarts", testProductToManyRemoveOpCarts)
+	t.Run("ProductToOrders", testProductToManyRemoveOpOrders)
+	t.Run("ProductToProductTags", testProductToManyRemoveOpProductTags)
 	t.Run("RoleToRoleMenuPermissions", testRoleToManyRemoveOpRoleMenuPermissions)
 	t.Run("RoleToUsers", testRoleToManyRemoveOpUsers)
+	t.Run("TagToProductTags", testTagToManyRemoveOpProductTags)
+	t.Run("UserToCarts", testUserToManyRemoveOpCarts)
+	t.Run("UserToOrders", testUserToManyRemoveOpOrders)
 }

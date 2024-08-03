@@ -6,15 +6,25 @@ package models
 import "testing"
 
 func TestUpsert(t *testing.T) {
+	t.Run("Carts", testCartsUpsert)
+
 	t.Run("MenuPermissions", testMenuPermissionsUpsert)
 
 	t.Run("Menus", testMenusUpsert)
 
+	t.Run("Orders", testOrdersUpsert)
+
 	t.Run("Permissions", testPermissionsUpsert)
+
+	t.Run("ProductTags", testProductTagsUpsert)
+
+	t.Run("Products", testProductsUpsert)
 
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsUpsert)
 
 	t.Run("Roles", testRolesUpsert)
+
+	t.Run("Tags", testTagsUpsert)
 
 	t.Run("Users", testUsersUpsert)
 }

@@ -12,160 +12,250 @@ import "testing"
 // It does NOT run each operation group in parallel.
 // Separating the tests thusly grants avoidance of Postgres deadlocks.
 func TestParent(t *testing.T) {
+	t.Run("Carts", testCarts)
 	t.Run("MenuPermissions", testMenuPermissions)
 	t.Run("Menus", testMenus)
+	t.Run("Orders", testOrders)
 	t.Run("Permissions", testPermissions)
+	t.Run("ProductTags", testProductTags)
+	t.Run("Products", testProducts)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissions)
 	t.Run("Roles", testRoles)
+	t.Run("Tags", testTags)
 	t.Run("Users", testUsers)
 }
 
 func TestDelete(t *testing.T) {
+	t.Run("Carts", testCartsDelete)
 	t.Run("MenuPermissions", testMenuPermissionsDelete)
 	t.Run("Menus", testMenusDelete)
+	t.Run("Orders", testOrdersDelete)
 	t.Run("Permissions", testPermissionsDelete)
+	t.Run("ProductTags", testProductTagsDelete)
+	t.Run("Products", testProductsDelete)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsDelete)
 	t.Run("Roles", testRolesDelete)
+	t.Run("Tags", testTagsDelete)
 	t.Run("Users", testUsersDelete)
 }
 
 func TestQueryDeleteAll(t *testing.T) {
+	t.Run("Carts", testCartsQueryDeleteAll)
 	t.Run("MenuPermissions", testMenuPermissionsQueryDeleteAll)
 	t.Run("Menus", testMenusQueryDeleteAll)
+	t.Run("Orders", testOrdersQueryDeleteAll)
 	t.Run("Permissions", testPermissionsQueryDeleteAll)
+	t.Run("ProductTags", testProductTagsQueryDeleteAll)
+	t.Run("Products", testProductsQueryDeleteAll)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsQueryDeleteAll)
 	t.Run("Roles", testRolesQueryDeleteAll)
+	t.Run("Tags", testTagsQueryDeleteAll)
 	t.Run("Users", testUsersQueryDeleteAll)
 }
 
 func TestSliceDeleteAll(t *testing.T) {
+	t.Run("Carts", testCartsSliceDeleteAll)
 	t.Run("MenuPermissions", testMenuPermissionsSliceDeleteAll)
 	t.Run("Menus", testMenusSliceDeleteAll)
+	t.Run("Orders", testOrdersSliceDeleteAll)
 	t.Run("Permissions", testPermissionsSliceDeleteAll)
+	t.Run("ProductTags", testProductTagsSliceDeleteAll)
+	t.Run("Products", testProductsSliceDeleteAll)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsSliceDeleteAll)
 	t.Run("Roles", testRolesSliceDeleteAll)
+	t.Run("Tags", testTagsSliceDeleteAll)
 	t.Run("Users", testUsersSliceDeleteAll)
 }
 
 func TestExists(t *testing.T) {
+	t.Run("Carts", testCartsExists)
 	t.Run("MenuPermissions", testMenuPermissionsExists)
 	t.Run("Menus", testMenusExists)
+	t.Run("Orders", testOrdersExists)
 	t.Run("Permissions", testPermissionsExists)
+	t.Run("ProductTags", testProductTagsExists)
+	t.Run("Products", testProductsExists)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsExists)
 	t.Run("Roles", testRolesExists)
+	t.Run("Tags", testTagsExists)
 	t.Run("Users", testUsersExists)
 }
 
 func TestFind(t *testing.T) {
+	t.Run("Carts", testCartsFind)
 	t.Run("MenuPermissions", testMenuPermissionsFind)
 	t.Run("Menus", testMenusFind)
+	t.Run("Orders", testOrdersFind)
 	t.Run("Permissions", testPermissionsFind)
+	t.Run("ProductTags", testProductTagsFind)
+	t.Run("Products", testProductsFind)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsFind)
 	t.Run("Roles", testRolesFind)
+	t.Run("Tags", testTagsFind)
 	t.Run("Users", testUsersFind)
 }
 
 func TestBind(t *testing.T) {
+	t.Run("Carts", testCartsBind)
 	t.Run("MenuPermissions", testMenuPermissionsBind)
 	t.Run("Menus", testMenusBind)
+	t.Run("Orders", testOrdersBind)
 	t.Run("Permissions", testPermissionsBind)
+	t.Run("ProductTags", testProductTagsBind)
+	t.Run("Products", testProductsBind)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsBind)
 	t.Run("Roles", testRolesBind)
+	t.Run("Tags", testTagsBind)
 	t.Run("Users", testUsersBind)
 }
 
 func TestOne(t *testing.T) {
+	t.Run("Carts", testCartsOne)
 	t.Run("MenuPermissions", testMenuPermissionsOne)
 	t.Run("Menus", testMenusOne)
+	t.Run("Orders", testOrdersOne)
 	t.Run("Permissions", testPermissionsOne)
+	t.Run("ProductTags", testProductTagsOne)
+	t.Run("Products", testProductsOne)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsOne)
 	t.Run("Roles", testRolesOne)
+	t.Run("Tags", testTagsOne)
 	t.Run("Users", testUsersOne)
 }
 
 func TestAll(t *testing.T) {
+	t.Run("Carts", testCartsAll)
 	t.Run("MenuPermissions", testMenuPermissionsAll)
 	t.Run("Menus", testMenusAll)
+	t.Run("Orders", testOrdersAll)
 	t.Run("Permissions", testPermissionsAll)
+	t.Run("ProductTags", testProductTagsAll)
+	t.Run("Products", testProductsAll)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsAll)
 	t.Run("Roles", testRolesAll)
+	t.Run("Tags", testTagsAll)
 	t.Run("Users", testUsersAll)
 }
 
 func TestCount(t *testing.T) {
+	t.Run("Carts", testCartsCount)
 	t.Run("MenuPermissions", testMenuPermissionsCount)
 	t.Run("Menus", testMenusCount)
+	t.Run("Orders", testOrdersCount)
 	t.Run("Permissions", testPermissionsCount)
+	t.Run("ProductTags", testProductTagsCount)
+	t.Run("Products", testProductsCount)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsCount)
 	t.Run("Roles", testRolesCount)
+	t.Run("Tags", testTagsCount)
 	t.Run("Users", testUsersCount)
 }
 
 func TestHooks(t *testing.T) {
+	t.Run("Carts", testCartsHooks)
 	t.Run("MenuPermissions", testMenuPermissionsHooks)
 	t.Run("Menus", testMenusHooks)
+	t.Run("Orders", testOrdersHooks)
 	t.Run("Permissions", testPermissionsHooks)
+	t.Run("ProductTags", testProductTagsHooks)
+	t.Run("Products", testProductsHooks)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsHooks)
 	t.Run("Roles", testRolesHooks)
+	t.Run("Tags", testTagsHooks)
 	t.Run("Users", testUsersHooks)
 }
 
 func TestInsert(t *testing.T) {
+	t.Run("Carts", testCartsInsert)
+	t.Run("Carts", testCartsInsertWhitelist)
 	t.Run("MenuPermissions", testMenuPermissionsInsert)
 	t.Run("MenuPermissions", testMenuPermissionsInsertWhitelist)
 	t.Run("Menus", testMenusInsert)
 	t.Run("Menus", testMenusInsertWhitelist)
+	t.Run("Orders", testOrdersInsert)
+	t.Run("Orders", testOrdersInsertWhitelist)
 	t.Run("Permissions", testPermissionsInsert)
 	t.Run("Permissions", testPermissionsInsertWhitelist)
+	t.Run("ProductTags", testProductTagsInsert)
+	t.Run("ProductTags", testProductTagsInsertWhitelist)
+	t.Run("Products", testProductsInsert)
+	t.Run("Products", testProductsInsertWhitelist)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsInsert)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsInsertWhitelist)
 	t.Run("Roles", testRolesInsert)
 	t.Run("Roles", testRolesInsertWhitelist)
+	t.Run("Tags", testTagsInsert)
+	t.Run("Tags", testTagsInsertWhitelist)
 	t.Run("Users", testUsersInsert)
 	t.Run("Users", testUsersInsertWhitelist)
 }
 
 func TestReload(t *testing.T) {
+	t.Run("Carts", testCartsReload)
 	t.Run("MenuPermissions", testMenuPermissionsReload)
 	t.Run("Menus", testMenusReload)
+	t.Run("Orders", testOrdersReload)
 	t.Run("Permissions", testPermissionsReload)
+	t.Run("ProductTags", testProductTagsReload)
+	t.Run("Products", testProductsReload)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsReload)
 	t.Run("Roles", testRolesReload)
+	t.Run("Tags", testTagsReload)
 	t.Run("Users", testUsersReload)
 }
 
 func TestReloadAll(t *testing.T) {
+	t.Run("Carts", testCartsReloadAll)
 	t.Run("MenuPermissions", testMenuPermissionsReloadAll)
 	t.Run("Menus", testMenusReloadAll)
+	t.Run("Orders", testOrdersReloadAll)
 	t.Run("Permissions", testPermissionsReloadAll)
+	t.Run("ProductTags", testProductTagsReloadAll)
+	t.Run("Products", testProductsReloadAll)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsReloadAll)
 	t.Run("Roles", testRolesReloadAll)
+	t.Run("Tags", testTagsReloadAll)
 	t.Run("Users", testUsersReloadAll)
 }
 
 func TestSelect(t *testing.T) {
+	t.Run("Carts", testCartsSelect)
 	t.Run("MenuPermissions", testMenuPermissionsSelect)
 	t.Run("Menus", testMenusSelect)
+	t.Run("Orders", testOrdersSelect)
 	t.Run("Permissions", testPermissionsSelect)
+	t.Run("ProductTags", testProductTagsSelect)
+	t.Run("Products", testProductsSelect)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsSelect)
 	t.Run("Roles", testRolesSelect)
+	t.Run("Tags", testTagsSelect)
 	t.Run("Users", testUsersSelect)
 }
 
 func TestUpdate(t *testing.T) {
+	t.Run("Carts", testCartsUpdate)
 	t.Run("MenuPermissions", testMenuPermissionsUpdate)
 	t.Run("Menus", testMenusUpdate)
+	t.Run("Orders", testOrdersUpdate)
 	t.Run("Permissions", testPermissionsUpdate)
+	t.Run("ProductTags", testProductTagsUpdate)
+	t.Run("Products", testProductsUpdate)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsUpdate)
 	t.Run("Roles", testRolesUpdate)
+	t.Run("Tags", testTagsUpdate)
 	t.Run("Users", testUsersUpdate)
 }
 
 func TestSliceUpdateAll(t *testing.T) {
+	t.Run("Carts", testCartsSliceUpdateAll)
 	t.Run("MenuPermissions", testMenuPermissionsSliceUpdateAll)
 	t.Run("Menus", testMenusSliceUpdateAll)
+	t.Run("Orders", testOrdersSliceUpdateAll)
 	t.Run("Permissions", testPermissionsSliceUpdateAll)
+	t.Run("ProductTags", testProductTagsSliceUpdateAll)
+	t.Run("Products", testProductsSliceUpdateAll)
 	t.Run("RoleMenuPermissions", testRoleMenuPermissionsSliceUpdateAll)
 	t.Run("Roles", testRolesSliceUpdateAll)
+	t.Run("Tags", testTagsSliceUpdateAll)
 	t.Run("Users", testUsersSliceUpdateAll)
 }

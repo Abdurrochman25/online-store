@@ -24,16 +24,22 @@ import (
 
 // User is an object representing the database table.
 type User struct {
-	ID                  int         `boil:"id" json:"id" toml:"id" yaml:"id"`
-	Name                null.String `boil:"name" json:"name,omitempty" toml:"name" yaml:"name,omitempty"`
-	Email               null.String `boil:"email" json:"email,omitempty" toml:"email" yaml:"email,omitempty"`
-	Password            null.String `boil:"password" json:"password,omitempty" toml:"password" yaml:"password,omitempty"`
-	LastAuthenticatedAt null.Time   `boil:"last_authenticated_at" json:"last_authenticated_at,omitempty" toml:"last_authenticated_at" yaml:"last_authenticated_at,omitempty"`
-	RoleID              null.Int16  `boil:"role_id" json:"role_id,omitempty" toml:"role_id" yaml:"role_id,omitempty"`
-	CreatedAt           null.Time   `boil:"created_at" json:"created_at,omitempty" toml:"created_at" yaml:"created_at,omitempty"`
-	UpdatedAt           null.Time   `boil:"updated_at" json:"updated_at,omitempty" toml:"updated_at" yaml:"updated_at,omitempty"`
-	DeletedAt           null.Time   `boil:"deleted_at" json:"deleted_at,omitempty" toml:"deleted_at" yaml:"deleted_at,omitempty"`
-	IsLoggedIn          bool        `boil:"is_logged_in" json:"is_logged_in" toml:"is_logged_in" yaml:"is_logged_in"`
+	ID                  int          `boil:"id" json:"id" toml:"id" yaml:"id"`
+	Name                null.String  `boil:"name" json:"name,omitempty" toml:"name" yaml:"name,omitempty"`
+	Email               null.String  `boil:"email" json:"email,omitempty" toml:"email" yaml:"email,omitempty"`
+	Password            null.String  `boil:"password" json:"password,omitempty" toml:"password" yaml:"password,omitempty"`
+	LastAuthenticatedAt null.Time    `boil:"last_authenticated_at" json:"last_authenticated_at,omitempty" toml:"last_authenticated_at" yaml:"last_authenticated_at,omitempty"`
+	RoleID              null.Int16   `boil:"role_id" json:"role_id,omitempty" toml:"role_id" yaml:"role_id,omitempty"`
+	CreatedAt           null.Time    `boil:"created_at" json:"created_at,omitempty" toml:"created_at" yaml:"created_at,omitempty"`
+	UpdatedAt           null.Time    `boil:"updated_at" json:"updated_at,omitempty" toml:"updated_at" yaml:"updated_at,omitempty"`
+	DeletedAt           null.Time    `boil:"deleted_at" json:"deleted_at,omitempty" toml:"deleted_at" yaml:"deleted_at,omitempty"`
+	IsLoggedIn          bool         `boil:"is_logged_in" json:"is_logged_in" toml:"is_logged_in" yaml:"is_logged_in"`
+	FullName            null.String  `boil:"full_name" json:"full_name,omitempty" toml:"full_name" yaml:"full_name,omitempty"`
+	PhoneNumber         null.String  `boil:"phone_number" json:"phone_number,omitempty" toml:"phone_number" yaml:"phone_number,omitempty"`
+	Address             null.String  `boil:"address" json:"address,omitempty" toml:"address" yaml:"address,omitempty"`
+	Zipcode             null.String  `boil:"zipcode" json:"zipcode,omitempty" toml:"zipcode" yaml:"zipcode,omitempty"`
+	Longitude           null.Float32 `boil:"longitude" json:"longitude,omitempty" toml:"longitude" yaml:"longitude,omitempty"`
+	Latitude            null.Float32 `boil:"latitude" json:"latitude,omitempty" toml:"latitude" yaml:"latitude,omitempty"`
 
 	R *userR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L userL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -50,6 +56,12 @@ var UserColumns = struct {
 	UpdatedAt           string
 	DeletedAt           string
 	IsLoggedIn          string
+	FullName            string
+	PhoneNumber         string
+	Address             string
+	Zipcode             string
+	Longitude           string
+	Latitude            string
 }{
 	ID:                  "id",
 	Name:                "name",
@@ -61,6 +73,12 @@ var UserColumns = struct {
 	UpdatedAt:           "updated_at",
 	DeletedAt:           "deleted_at",
 	IsLoggedIn:          "is_logged_in",
+	FullName:            "full_name",
+	PhoneNumber:         "phone_number",
+	Address:             "address",
+	Zipcode:             "zipcode",
+	Longitude:           "longitude",
+	Latitude:            "latitude",
 }
 
 var UserTableColumns = struct {
@@ -74,6 +92,12 @@ var UserTableColumns = struct {
 	UpdatedAt           string
 	DeletedAt           string
 	IsLoggedIn          string
+	FullName            string
+	PhoneNumber         string
+	Address             string
+	Zipcode             string
+	Longitude           string
+	Latitude            string
 }{
 	ID:                  "users.id",
 	Name:                "users.name",
@@ -85,6 +109,12 @@ var UserTableColumns = struct {
 	UpdatedAt:           "users.updated_at",
 	DeletedAt:           "users.deleted_at",
 	IsLoggedIn:          "users.is_logged_in",
+	FullName:            "users.full_name",
+	PhoneNumber:         "users.phone_number",
+	Address:             "users.address",
+	Zipcode:             "users.zipcode",
+	Longitude:           "users.longitude",
+	Latitude:            "users.latitude",
 }
 
 // Generated where
@@ -98,6 +128,44 @@ func (w whereHelperbool) LTE(x bool) qm.QueryMod { return qmhelper.Where(w.field
 func (w whereHelperbool) GT(x bool) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
 func (w whereHelperbool) GTE(x bool) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
 
+type whereHelpernull_Float32 struct{ field string }
+
+func (w whereHelpernull_Float32) EQ(x null.Float32) qm.QueryMod {
+	return qmhelper.WhereNullEQ(w.field, false, x)
+}
+func (w whereHelpernull_Float32) NEQ(x null.Float32) qm.QueryMod {
+	return qmhelper.WhereNullEQ(w.field, true, x)
+}
+func (w whereHelpernull_Float32) LT(x null.Float32) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.LT, x)
+}
+func (w whereHelpernull_Float32) LTE(x null.Float32) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.LTE, x)
+}
+func (w whereHelpernull_Float32) GT(x null.Float32) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.GT, x)
+}
+func (w whereHelpernull_Float32) GTE(x null.Float32) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.GTE, x)
+}
+func (w whereHelpernull_Float32) IN(slice []float32) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
+}
+func (w whereHelpernull_Float32) NIN(slice []float32) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
+}
+
+func (w whereHelpernull_Float32) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
+func (w whereHelpernull_Float32) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
+
 var UserWhere = struct {
 	ID                  whereHelperint
 	Name                whereHelpernull_String
@@ -109,6 +177,12 @@ var UserWhere = struct {
 	UpdatedAt           whereHelpernull_Time
 	DeletedAt           whereHelpernull_Time
 	IsLoggedIn          whereHelperbool
+	FullName            whereHelpernull_String
+	PhoneNumber         whereHelpernull_String
+	Address             whereHelpernull_String
+	Zipcode             whereHelpernull_String
+	Longitude           whereHelpernull_Float32
+	Latitude            whereHelpernull_Float32
 }{
 	ID:                  whereHelperint{field: "\"users\".\"id\""},
 	Name:                whereHelpernull_String{field: "\"users\".\"name\""},
@@ -120,18 +194,30 @@ var UserWhere = struct {
 	UpdatedAt:           whereHelpernull_Time{field: "\"users\".\"updated_at\""},
 	DeletedAt:           whereHelpernull_Time{field: "\"users\".\"deleted_at\""},
 	IsLoggedIn:          whereHelperbool{field: "\"users\".\"is_logged_in\""},
+	FullName:            whereHelpernull_String{field: "\"users\".\"full_name\""},
+	PhoneNumber:         whereHelpernull_String{field: "\"users\".\"phone_number\""},
+	Address:             whereHelpernull_String{field: "\"users\".\"address\""},
+	Zipcode:             whereHelpernull_String{field: "\"users\".\"zipcode\""},
+	Longitude:           whereHelpernull_Float32{field: "\"users\".\"longitude\""},
+	Latitude:            whereHelpernull_Float32{field: "\"users\".\"latitude\""},
 }
 
 // UserRels is where relationship names are stored.
 var UserRels = struct {
-	Role string
+	Role   string
+	Carts  string
+	Orders string
 }{
-	Role: "Role",
+	Role:   "Role",
+	Carts:  "Carts",
+	Orders: "Orders",
 }
 
 // userR is where relationships are stored.
 type userR struct {
-	Role *Role `boil:"Role" json:"Role" toml:"Role" yaml:"Role"`
+	Role   *Role      `boil:"Role" json:"Role" toml:"Role" yaml:"Role"`
+	Carts  CartSlice  `boil:"Carts" json:"Carts" toml:"Carts" yaml:"Carts"`
+	Orders OrderSlice `boil:"Orders" json:"Orders" toml:"Orders" yaml:"Orders"`
 }
 
 // NewStruct creates a new relationship struct
@@ -146,13 +232,27 @@ func (r *userR) GetRole() *Role {
 	return r.Role
 }
 
+func (r *userR) GetCarts() CartSlice {
+	if r == nil {
+		return nil
+	}
+	return r.Carts
+}
+
+func (r *userR) GetOrders() OrderSlice {
+	if r == nil {
+		return nil
+	}
+	return r.Orders
+}
+
 // userL is where Load methods for each relationship are stored.
 type userL struct{}
 
 var (
-	userAllColumns            = []string{"id", "name", "email", "password", "last_authenticated_at", "role_id", "created_at", "updated_at", "deleted_at", "is_logged_in"}
+	userAllColumns            = []string{"id", "name", "email", "password", "last_authenticated_at", "role_id", "created_at", "updated_at", "deleted_at", "is_logged_in", "full_name", "phone_number", "address", "zipcode", "longitude", "latitude"}
 	userColumnsWithoutDefault = []string{"is_logged_in"}
-	userColumnsWithDefault    = []string{"id", "name", "email", "password", "last_authenticated_at", "role_id", "created_at", "updated_at", "deleted_at"}
+	userColumnsWithDefault    = []string{"id", "name", "email", "password", "last_authenticated_at", "role_id", "created_at", "updated_at", "deleted_at", "full_name", "phone_number", "address", "zipcode", "longitude", "latitude"}
 	userPrimaryKeyColumns     = []string{"id"}
 	userGeneratedColumns      = []string{}
 )
@@ -473,6 +573,34 @@ func (o *User) Role(mods ...qm.QueryMod) roleQuery {
 	return Roles(queryMods...)
 }
 
+// Carts retrieves all the cart's Carts with an executor.
+func (o *User) Carts(mods ...qm.QueryMod) cartQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("\"carts\".\"user_id\"=?", o.ID),
+	)
+
+	return Carts(queryMods...)
+}
+
+// Orders retrieves all the order's Orders with an executor.
+func (o *User) Orders(mods ...qm.QueryMod) orderQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("\"orders\".\"user_id\"=?", o.ID),
+	)
+
+	return Orders(queryMods...)
+}
+
 // LoadRole allows an eager lookup of values, cached into the
 // loaded structs of the objects. This is for an N-1 relationship.
 func (userL) LoadRole(ctx context.Context, e boil.ContextExecutor, singular bool, maybeUser interface{}, mods queries.Applicator) error {
@@ -597,6 +725,232 @@ func (userL) LoadRole(ctx context.Context, e boil.ContextExecutor, singular bool
 	return nil
 }
 
+// LoadCarts allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (userL) LoadCarts(ctx context.Context, e boil.ContextExecutor, singular bool, maybeUser interface{}, mods queries.Applicator) error {
+	var slice []*User
+	var object *User
+
+	if singular {
+		var ok bool
+		object, ok = maybeUser.(*User)
+		if !ok {
+			object = new(User)
+			ok = queries.SetFromEmbeddedStruct(&object, &maybeUser)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", object, maybeUser))
+			}
+		}
+	} else {
+		s, ok := maybeUser.(*[]*User)
+		if ok {
+			slice = *s
+		} else {
+			ok = queries.SetFromEmbeddedStruct(&slice, maybeUser)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", slice, maybeUser))
+			}
+		}
+	}
+
+	args := make(map[interface{}]struct{})
+	if singular {
+		if object.R == nil {
+			object.R = &userR{}
+		}
+		args[object.ID] = struct{}{}
+	} else {
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &userR{}
+			}
+			args[obj.ID] = struct{}{}
+		}
+	}
+
+	if len(args) == 0 {
+		return nil
+	}
+
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
+	query := NewQuery(
+		qm.From(`carts`),
+		qm.WhereIn(`carts.user_id in ?`, argsSlice...),
+	)
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load carts")
+	}
+
+	var resultSlice []*Cart
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice carts")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on carts")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for carts")
+	}
+
+	if len(cartAfterSelectHooks) != 0 {
+		for _, obj := range resultSlice {
+			if err := obj.doAfterSelectHooks(ctx, e); err != nil {
+				return err
+			}
+		}
+	}
+	if singular {
+		object.R.Carts = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &cartR{}
+			}
+			foreign.R.User = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if queries.Equal(local.ID, foreign.UserID) {
+				local.R.Carts = append(local.R.Carts, foreign)
+				if foreign.R == nil {
+					foreign.R = &cartR{}
+				}
+				foreign.R.User = local
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
+// LoadOrders allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (userL) LoadOrders(ctx context.Context, e boil.ContextExecutor, singular bool, maybeUser interface{}, mods queries.Applicator) error {
+	var slice []*User
+	var object *User
+
+	if singular {
+		var ok bool
+		object, ok = maybeUser.(*User)
+		if !ok {
+			object = new(User)
+			ok = queries.SetFromEmbeddedStruct(&object, &maybeUser)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", object, maybeUser))
+			}
+		}
+	} else {
+		s, ok := maybeUser.(*[]*User)
+		if ok {
+			slice = *s
+		} else {
+			ok = queries.SetFromEmbeddedStruct(&slice, maybeUser)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", slice, maybeUser))
+			}
+		}
+	}
+
+	args := make(map[interface{}]struct{})
+	if singular {
+		if object.R == nil {
+			object.R = &userR{}
+		}
+		args[object.ID] = struct{}{}
+	} else {
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &userR{}
+			}
+			args[obj.ID] = struct{}{}
+		}
+	}
+
+	if len(args) == 0 {
+		return nil
+	}
+
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
+	query := NewQuery(
+		qm.From(`orders`),
+		qm.WhereIn(`orders.user_id in ?`, argsSlice...),
+	)
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load orders")
+	}
+
+	var resultSlice []*Order
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice orders")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on orders")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for orders")
+	}
+
+	if len(orderAfterSelectHooks) != 0 {
+		for _, obj := range resultSlice {
+			if err := obj.doAfterSelectHooks(ctx, e); err != nil {
+				return err
+			}
+		}
+	}
+	if singular {
+		object.R.Orders = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &orderR{}
+			}
+			foreign.R.User = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if queries.Equal(local.ID, foreign.UserID) {
+				local.R.Orders = append(local.R.Orders, foreign)
+				if foreign.R == nil {
+					foreign.R = &orderR{}
+				}
+				foreign.R.User = local
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
 // SetRole of the user to the related item.
 // Sets o.R.Role to related.
 // Adds o to related.R.Users.
@@ -674,6 +1028,260 @@ func (o *User) RemoveRole(ctx context.Context, exec boil.ContextExecutor, relate
 		related.R.Users = related.R.Users[:ln-1]
 		break
 	}
+	return nil
+}
+
+// AddCarts adds the given related objects to the existing relationships
+// of the user, optionally inserting them as new records.
+// Appends related to o.R.Carts.
+// Sets related.R.User appropriately.
+func (o *User) AddCarts(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Cart) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			queries.Assign(&rel.UserID, o.ID)
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE \"carts\" SET %s WHERE %s",
+				strmangle.SetParamNames("\"", "\"", 1, []string{"user_id"}),
+				strmangle.WhereClause("\"", "\"", 2, cartPrimaryKeyColumns),
+			)
+			values := []interface{}{o.ID, rel.ID}
+
+			if boil.IsDebug(ctx) {
+				writer := boil.DebugWriterFrom(ctx)
+				fmt.Fprintln(writer, updateQuery)
+				fmt.Fprintln(writer, values)
+			}
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			queries.Assign(&rel.UserID, o.ID)
+		}
+	}
+
+	if o.R == nil {
+		o.R = &userR{
+			Carts: related,
+		}
+	} else {
+		o.R.Carts = append(o.R.Carts, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &cartR{
+				User: o,
+			}
+		} else {
+			rel.R.User = o
+		}
+	}
+	return nil
+}
+
+// SetCarts removes all previously related items of the
+// user replacing them completely with the passed
+// in related items, optionally inserting them as new records.
+// Sets o.R.User's Carts accordingly.
+// Replaces o.R.Carts with related.
+// Sets related.R.User's Carts accordingly.
+func (o *User) SetCarts(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Cart) error {
+	query := "update \"carts\" set \"user_id\" = null where \"user_id\" = $1"
+	values := []interface{}{o.ID}
+	if boil.IsDebug(ctx) {
+		writer := boil.DebugWriterFrom(ctx)
+		fmt.Fprintln(writer, query)
+		fmt.Fprintln(writer, values)
+	}
+	_, err := exec.ExecContext(ctx, query, values...)
+	if err != nil {
+		return errors.Wrap(err, "failed to remove relationships before set")
+	}
+
+	if o.R != nil {
+		for _, rel := range o.R.Carts {
+			queries.SetScanner(&rel.UserID, nil)
+			if rel.R == nil {
+				continue
+			}
+
+			rel.R.User = nil
+		}
+		o.R.Carts = nil
+	}
+
+	return o.AddCarts(ctx, exec, insert, related...)
+}
+
+// RemoveCarts relationships from objects passed in.
+// Removes related items from R.Carts (uses pointer comparison, removal does not keep order)
+// Sets related.R.User.
+func (o *User) RemoveCarts(ctx context.Context, exec boil.ContextExecutor, related ...*Cart) error {
+	if len(related) == 0 {
+		return nil
+	}
+
+	var err error
+	for _, rel := range related {
+		queries.SetScanner(&rel.UserID, nil)
+		if rel.R != nil {
+			rel.R.User = nil
+		}
+		if _, err = rel.Update(ctx, exec, boil.Whitelist("user_id")); err != nil {
+			return err
+		}
+	}
+	if o.R == nil {
+		return nil
+	}
+
+	for _, rel := range related {
+		for i, ri := range o.R.Carts {
+			if rel != ri {
+				continue
+			}
+
+			ln := len(o.R.Carts)
+			if ln > 1 && i < ln-1 {
+				o.R.Carts[i] = o.R.Carts[ln-1]
+			}
+			o.R.Carts = o.R.Carts[:ln-1]
+			break
+		}
+	}
+
+	return nil
+}
+
+// AddOrders adds the given related objects to the existing relationships
+// of the user, optionally inserting them as new records.
+// Appends related to o.R.Orders.
+// Sets related.R.User appropriately.
+func (o *User) AddOrders(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Order) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			queries.Assign(&rel.UserID, o.ID)
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE \"orders\" SET %s WHERE %s",
+				strmangle.SetParamNames("\"", "\"", 1, []string{"user_id"}),
+				strmangle.WhereClause("\"", "\"", 2, orderPrimaryKeyColumns),
+			)
+			values := []interface{}{o.ID, rel.ID}
+
+			if boil.IsDebug(ctx) {
+				writer := boil.DebugWriterFrom(ctx)
+				fmt.Fprintln(writer, updateQuery)
+				fmt.Fprintln(writer, values)
+			}
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			queries.Assign(&rel.UserID, o.ID)
+		}
+	}
+
+	if o.R == nil {
+		o.R = &userR{
+			Orders: related,
+		}
+	} else {
+		o.R.Orders = append(o.R.Orders, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &orderR{
+				User: o,
+			}
+		} else {
+			rel.R.User = o
+		}
+	}
+	return nil
+}
+
+// SetOrders removes all previously related items of the
+// user replacing them completely with the passed
+// in related items, optionally inserting them as new records.
+// Sets o.R.User's Orders accordingly.
+// Replaces o.R.Orders with related.
+// Sets related.R.User's Orders accordingly.
+func (o *User) SetOrders(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Order) error {
+	query := "update \"orders\" set \"user_id\" = null where \"user_id\" = $1"
+	values := []interface{}{o.ID}
+	if boil.IsDebug(ctx) {
+		writer := boil.DebugWriterFrom(ctx)
+		fmt.Fprintln(writer, query)
+		fmt.Fprintln(writer, values)
+	}
+	_, err := exec.ExecContext(ctx, query, values...)
+	if err != nil {
+		return errors.Wrap(err, "failed to remove relationships before set")
+	}
+
+	if o.R != nil {
+		for _, rel := range o.R.Orders {
+			queries.SetScanner(&rel.UserID, nil)
+			if rel.R == nil {
+				continue
+			}
+
+			rel.R.User = nil
+		}
+		o.R.Orders = nil
+	}
+
+	return o.AddOrders(ctx, exec, insert, related...)
+}
+
+// RemoveOrders relationships from objects passed in.
+// Removes related items from R.Orders (uses pointer comparison, removal does not keep order)
+// Sets related.R.User.
+func (o *User) RemoveOrders(ctx context.Context, exec boil.ContextExecutor, related ...*Order) error {
+	if len(related) == 0 {
+		return nil
+	}
+
+	var err error
+	for _, rel := range related {
+		queries.SetScanner(&rel.UserID, nil)
+		if rel.R != nil {
+			rel.R.User = nil
+		}
+		if _, err = rel.Update(ctx, exec, boil.Whitelist("user_id")); err != nil {
+			return err
+		}
+	}
+	if o.R == nil {
+		return nil
+	}
+
+	for _, rel := range related {
+		for i, ri := range o.R.Orders {
+			if rel != ri {
+				continue
+			}
+
+			ln := len(o.R.Orders)
+			if ln > 1 && i < ln-1 {
+				o.R.Orders[i] = o.R.Orders[ln-1]
+			}
+			o.R.Orders = o.R.Orders[:ln-1]
+			break
+		}
+	}
+
 	return nil
 }
 
