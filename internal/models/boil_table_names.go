@@ -4,13 +4,17 @@
 package models
 
 var TableNames = struct {
-	Permissions     string
-	RolePermissions string
-	Roles           string
-	Users           string
+	MenuPermissions     string
+	Menus               string
+	Permissions         string
+	RoleMenuPermissions string
+	Roles               string
+	Users               string
 }{
-	Permissions:     "permissions",
-	RolePermissions: "role_permissions",
-	Roles:           "roles",
-	Users:           "users",
+	MenuPermissions:     "menu_permissions",
+	Menus:               "menus",
+	Permissions:         "permissions",
+	RoleMenuPermissions: "role_menu_permissions",
+	Roles:               "roles",
+	Users:               "users",
 }

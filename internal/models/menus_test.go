@@ -21,24 +21,24 @@ var (
 	_ = queries.Equal
 )
 
-func testPermissions(t *testing.T) {
+func testMenus(t *testing.T) {
 	t.Parallel()
 
-	query := Permissions()
+	query := Menus()
 
 	if query.Query == nil {
 		t.Error("expected a query, got nothing")
 	}
 }
 
-func testPermissionsDelete(t *testing.T) {
+func testMenusDelete(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -54,7 +54,7 @@ func testPermissionsDelete(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -64,14 +64,14 @@ func testPermissionsDelete(t *testing.T) {
 	}
 }
 
-func testPermissionsQueryDeleteAll(t *testing.T) {
+func testMenusQueryDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -81,13 +81,13 @@ func testPermissionsQueryDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	if rowsAff, err := Permissions().DeleteAll(ctx, tx); err != nil {
+	if rowsAff, err := Menus().DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -97,14 +97,14 @@ func testPermissionsQueryDeleteAll(t *testing.T) {
 	}
 }
 
-func testPermissionsSliceDeleteAll(t *testing.T) {
+func testMenusSliceDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -114,7 +114,7 @@ func testPermissionsSliceDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := PermissionSlice{o}
+	slice := MenuSlice{o}
 
 	if rowsAff, err := slice.DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
@@ -122,7 +122,7 @@ func testPermissionsSliceDeleteAll(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -132,14 +132,14 @@ func testPermissionsSliceDeleteAll(t *testing.T) {
 	}
 }
 
-func testPermissionsExists(t *testing.T) {
+func testMenusExists(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -149,23 +149,23 @@ func testPermissionsExists(t *testing.T) {
 		t.Error(err)
 	}
 
-	e, err := PermissionExists(ctx, tx, o.ID)
+	e, err := MenuExists(ctx, tx, o.ID)
 	if err != nil {
-		t.Errorf("Unable to check if Permission exists: %s", err)
+		t.Errorf("Unable to check if Menu exists: %s", err)
 	}
 	if !e {
-		t.Errorf("Expected PermissionExists to return true, but got false.")
+		t.Errorf("Expected MenuExists to return true, but got false.")
 	}
 }
 
-func testPermissionsFind(t *testing.T) {
+func testMenusFind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -175,24 +175,24 @@ func testPermissionsFind(t *testing.T) {
 		t.Error(err)
 	}
 
-	permissionFound, err := FindPermission(ctx, tx, o.ID)
+	menuFound, err := FindMenu(ctx, tx, o.ID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if permissionFound == nil {
+	if menuFound == nil {
 		t.Error("want a record, got nil")
 	}
 }
 
-func testPermissionsBind(t *testing.T) {
+func testMenusBind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -202,19 +202,19 @@ func testPermissionsBind(t *testing.T) {
 		t.Error(err)
 	}
 
-	if err = Permissions().Bind(ctx, tx, o); err != nil {
+	if err = Menus().Bind(ctx, tx, o); err != nil {
 		t.Error(err)
 	}
 }
 
-func testPermissionsOne(t *testing.T) {
+func testMenusOne(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -224,38 +224,38 @@ func testPermissionsOne(t *testing.T) {
 		t.Error(err)
 	}
 
-	if x, err := Permissions().One(ctx, tx); err != nil {
+	if x, err := Menus().One(ctx, tx); err != nil {
 		t.Error(err)
 	} else if x == nil {
 		t.Error("expected to get a non nil record")
 	}
 }
 
-func testPermissionsAll(t *testing.T) {
+func testMenusAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	permissionOne := &Permission{}
-	permissionTwo := &Permission{}
-	if err = randomize.Struct(seed, permissionOne, permissionDBTypes, false, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	menuOne := &Menu{}
+	menuTwo := &Menu{}
+	if err = randomize.Struct(seed, menuOne, menuDBTypes, false, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
-	if err = randomize.Struct(seed, permissionTwo, permissionDBTypes, false, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	if err = randomize.Struct(seed, menuTwo, menuDBTypes, false, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = permissionOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = menuOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = permissionTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = menuTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	slice, err := Permissions().All(ctx, tx)
+	slice, err := Menus().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -265,31 +265,31 @@ func testPermissionsAll(t *testing.T) {
 	}
 }
 
-func testPermissionsCount(t *testing.T) {
+func testMenusCount(t *testing.T) {
 	t.Parallel()
 
 	var err error
 	seed := randomize.NewSeed()
-	permissionOne := &Permission{}
-	permissionTwo := &Permission{}
-	if err = randomize.Struct(seed, permissionOne, permissionDBTypes, false, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	menuOne := &Menu{}
+	menuTwo := &Menu{}
+	if err = randomize.Struct(seed, menuOne, menuDBTypes, false, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
-	if err = randomize.Struct(seed, permissionTwo, permissionDBTypes, false, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	if err = randomize.Struct(seed, menuTwo, menuDBTypes, false, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = permissionOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = menuOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = permissionTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = menuTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -299,155 +299,155 @@ func testPermissionsCount(t *testing.T) {
 	}
 }
 
-func permissionBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func permissionAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func permissionAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func permissionBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func permissionAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func permissionBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func permissionAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func permissionBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func permissionAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
-	*o = Permission{}
+func menuAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Menu) error {
+	*o = Menu{}
 	return nil
 }
 
-func testPermissionsHooks(t *testing.T) {
+func testMenusHooks(t *testing.T) {
 	t.Parallel()
 
 	var err error
 
 	ctx := context.Background()
-	empty := &Permission{}
-	o := &Permission{}
+	empty := &Menu{}
+	o := &Menu{}
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, o, permissionDBTypes, false); err != nil {
-		t.Errorf("Unable to randomize Permission object: %s", err)
+	if err = randomize.Struct(seed, o, menuDBTypes, false); err != nil {
+		t.Errorf("Unable to randomize Menu object: %s", err)
 	}
 
-	AddPermissionHook(boil.BeforeInsertHook, permissionBeforeInsertHook)
+	AddMenuHook(boil.BeforeInsertHook, menuBeforeInsertHook)
 	if err = o.doBeforeInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeInsertHook function to empty object, but got: %#v", o)
 	}
-	permissionBeforeInsertHooks = []PermissionHook{}
+	menuBeforeInsertHooks = []MenuHook{}
 
-	AddPermissionHook(boil.AfterInsertHook, permissionAfterInsertHook)
+	AddMenuHook(boil.AfterInsertHook, menuAfterInsertHook)
 	if err = o.doAfterInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterInsertHook function to empty object, but got: %#v", o)
 	}
-	permissionAfterInsertHooks = []PermissionHook{}
+	menuAfterInsertHooks = []MenuHook{}
 
-	AddPermissionHook(boil.AfterSelectHook, permissionAfterSelectHook)
+	AddMenuHook(boil.AfterSelectHook, menuAfterSelectHook)
 	if err = o.doAfterSelectHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterSelectHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterSelectHook function to empty object, but got: %#v", o)
 	}
-	permissionAfterSelectHooks = []PermissionHook{}
+	menuAfterSelectHooks = []MenuHook{}
 
-	AddPermissionHook(boil.BeforeUpdateHook, permissionBeforeUpdateHook)
+	AddMenuHook(boil.BeforeUpdateHook, menuBeforeUpdateHook)
 	if err = o.doBeforeUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpdateHook function to empty object, but got: %#v", o)
 	}
-	permissionBeforeUpdateHooks = []PermissionHook{}
+	menuBeforeUpdateHooks = []MenuHook{}
 
-	AddPermissionHook(boil.AfterUpdateHook, permissionAfterUpdateHook)
+	AddMenuHook(boil.AfterUpdateHook, menuAfterUpdateHook)
 	if err = o.doAfterUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpdateHook function to empty object, but got: %#v", o)
 	}
-	permissionAfterUpdateHooks = []PermissionHook{}
+	menuAfterUpdateHooks = []MenuHook{}
 
-	AddPermissionHook(boil.BeforeDeleteHook, permissionBeforeDeleteHook)
+	AddMenuHook(boil.BeforeDeleteHook, menuBeforeDeleteHook)
 	if err = o.doBeforeDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeDeleteHook function to empty object, but got: %#v", o)
 	}
-	permissionBeforeDeleteHooks = []PermissionHook{}
+	menuBeforeDeleteHooks = []MenuHook{}
 
-	AddPermissionHook(boil.AfterDeleteHook, permissionAfterDeleteHook)
+	AddMenuHook(boil.AfterDeleteHook, menuAfterDeleteHook)
 	if err = o.doAfterDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterDeleteHook function to empty object, but got: %#v", o)
 	}
-	permissionAfterDeleteHooks = []PermissionHook{}
+	menuAfterDeleteHooks = []MenuHook{}
 
-	AddPermissionHook(boil.BeforeUpsertHook, permissionBeforeUpsertHook)
+	AddMenuHook(boil.BeforeUpsertHook, menuBeforeUpsertHook)
 	if err = o.doBeforeUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpsertHook function to empty object, but got: %#v", o)
 	}
-	permissionBeforeUpsertHooks = []PermissionHook{}
+	menuBeforeUpsertHooks = []MenuHook{}
 
-	AddPermissionHook(boil.AfterUpsertHook, permissionAfterUpsertHook)
+	AddMenuHook(boil.AfterUpsertHook, menuAfterUpsertHook)
 	if err = o.doAfterUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpsertHook function to empty object, but got: %#v", o)
 	}
-	permissionAfterUpsertHooks = []PermissionHook{}
+	menuAfterUpsertHooks = []MenuHook{}
 }
 
-func testPermissionsInsert(t *testing.T) {
+func testMenusInsert(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -457,7 +457,7 @@ func testPermissionsInsert(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -467,24 +467,24 @@ func testPermissionsInsert(t *testing.T) {
 	}
 }
 
-func testPermissionsInsertWhitelist(t *testing.T) {
+func testMenusInsertWhitelist(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = o.Insert(ctx, tx, boil.Whitelist(permissionColumnsWithoutDefault...)); err != nil {
+	if err = o.Insert(ctx, tx, boil.Whitelist(menuColumnsWithoutDefault...)); err != nil {
 		t.Error(err)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -494,18 +494,18 @@ func testPermissionsInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testPermissionToManyMenuPermissions(t *testing.T) {
+func testMenuToManyMenuPermissions(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Permission
+	var a Menu
 	var b, c MenuPermission
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	if err = randomize.Struct(seed, &a, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
@@ -519,8 +519,8 @@ func testPermissionToManyMenuPermissions(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	queries.Assign(&b.PermissionID, a.ID)
-	queries.Assign(&c.PermissionID, a.ID)
+	queries.Assign(&b.MenuID, a.ID)
+	queries.Assign(&c.MenuID, a.ID)
 	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Fatal(err)
 	}
@@ -535,10 +535,10 @@ func testPermissionToManyMenuPermissions(t *testing.T) {
 
 	bFound, cFound := false, false
 	for _, v := range check {
-		if queries.Equal(v.PermissionID, b.PermissionID) {
+		if queries.Equal(v.MenuID, b.MenuID) {
 			bFound = true
 		}
-		if queries.Equal(v.PermissionID, c.PermissionID) {
+		if queries.Equal(v.MenuID, c.MenuID) {
 			cFound = true
 		}
 	}
@@ -550,8 +550,8 @@ func testPermissionToManyMenuPermissions(t *testing.T) {
 		t.Error("expected to find c")
 	}
 
-	slice := PermissionSlice{&a}
-	if err = a.L.LoadMenuPermissions(ctx, tx, false, (*[]*Permission)(&slice), nil); err != nil {
+	slice := MenuSlice{&a}
+	if err = a.L.LoadMenuPermissions(ctx, tx, false, (*[]*Menu)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
 	if got := len(a.R.MenuPermissions); got != 2 {
@@ -571,18 +571,18 @@ func testPermissionToManyMenuPermissions(t *testing.T) {
 	}
 }
 
-func testPermissionToManyAddOpMenuPermissions(t *testing.T) {
+func testMenuToManyAddOpMenuPermissions(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Permission
+	var a Menu
 	var b, c, d, e MenuPermission
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, permissionDBTypes, false, strmangle.SetComplement(permissionPrimaryKeyColumns, permissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, menuDBTypes, false, strmangle.SetComplement(menuPrimaryKeyColumns, menuColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*MenuPermission{&b, &c, &d, &e}
@@ -616,17 +616,17 @@ func testPermissionToManyAddOpMenuPermissions(t *testing.T) {
 		first := x[0]
 		second := x[1]
 
-		if !queries.Equal(a.ID, first.PermissionID) {
-			t.Error("foreign key was wrong value", a.ID, first.PermissionID)
+		if !queries.Equal(a.ID, first.MenuID) {
+			t.Error("foreign key was wrong value", a.ID, first.MenuID)
 		}
-		if !queries.Equal(a.ID, second.PermissionID) {
-			t.Error("foreign key was wrong value", a.ID, second.PermissionID)
+		if !queries.Equal(a.ID, second.MenuID) {
+			t.Error("foreign key was wrong value", a.ID, second.MenuID)
 		}
 
-		if first.R.Permission != &a {
+		if first.R.Menu != &a {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
-		if second.R.Permission != &a {
+		if second.R.Menu != &a {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
 
@@ -647,18 +647,18 @@ func testPermissionToManyAddOpMenuPermissions(t *testing.T) {
 	}
 }
 
-func testPermissionToManySetOpMenuPermissions(t *testing.T) {
+func testMenuToManySetOpMenuPermissions(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Permission
+	var a Menu
 	var b, c, d, e MenuPermission
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, permissionDBTypes, false, strmangle.SetComplement(permissionPrimaryKeyColumns, permissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, menuDBTypes, false, strmangle.SetComplement(menuPrimaryKeyColumns, menuColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*MenuPermission{&b, &c, &d, &e}
@@ -704,29 +704,29 @@ func testPermissionToManySetOpMenuPermissions(t *testing.T) {
 		t.Error("count was wrong:", count)
 	}
 
-	if !queries.IsValuerNil(b.PermissionID) {
+	if !queries.IsValuerNil(b.MenuID) {
 		t.Error("want b's foreign key value to be nil")
 	}
-	if !queries.IsValuerNil(c.PermissionID) {
+	if !queries.IsValuerNil(c.MenuID) {
 		t.Error("want c's foreign key value to be nil")
 	}
-	if !queries.Equal(a.ID, d.PermissionID) {
-		t.Error("foreign key was wrong value", a.ID, d.PermissionID)
+	if !queries.Equal(a.ID, d.MenuID) {
+		t.Error("foreign key was wrong value", a.ID, d.MenuID)
 	}
-	if !queries.Equal(a.ID, e.PermissionID) {
-		t.Error("foreign key was wrong value", a.ID, e.PermissionID)
+	if !queries.Equal(a.ID, e.MenuID) {
+		t.Error("foreign key was wrong value", a.ID, e.MenuID)
 	}
 
-	if b.R.Permission != nil {
+	if b.R.Menu != nil {
 		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if c.R.Permission != nil {
+	if c.R.Menu != nil {
 		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if d.R.Permission != &a {
+	if d.R.Menu != &a {
 		t.Error("relationship was not added properly to the foreign struct")
 	}
-	if e.R.Permission != &a {
+	if e.R.Menu != &a {
 		t.Error("relationship was not added properly to the foreign struct")
 	}
 
@@ -738,18 +738,18 @@ func testPermissionToManySetOpMenuPermissions(t *testing.T) {
 	}
 }
 
-func testPermissionToManyRemoveOpMenuPermissions(t *testing.T) {
+func testMenuToManyRemoveOpMenuPermissions(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Permission
+	var a Menu
 	var b, c, d, e MenuPermission
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, permissionDBTypes, false, strmangle.SetComplement(permissionPrimaryKeyColumns, permissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, menuDBTypes, false, strmangle.SetComplement(menuPrimaryKeyColumns, menuColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*MenuPermission{&b, &c, &d, &e}
@@ -789,23 +789,23 @@ func testPermissionToManyRemoveOpMenuPermissions(t *testing.T) {
 		t.Error("count was wrong:", count)
 	}
 
-	if !queries.IsValuerNil(b.PermissionID) {
+	if !queries.IsValuerNil(b.MenuID) {
 		t.Error("want b's foreign key value to be nil")
 	}
-	if !queries.IsValuerNil(c.PermissionID) {
+	if !queries.IsValuerNil(c.MenuID) {
 		t.Error("want c's foreign key value to be nil")
 	}
 
-	if b.R.Permission != nil {
+	if b.R.Menu != nil {
 		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if c.R.Permission != nil {
+	if c.R.Menu != nil {
 		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if d.R.Permission != &a {
+	if d.R.Menu != &a {
 		t.Error("relationship to a should have been preserved")
 	}
-	if e.R.Permission != &a {
+	if e.R.Menu != &a {
 		t.Error("relationship to a should have been preserved")
 	}
 
@@ -822,14 +822,14 @@ func testPermissionToManyRemoveOpMenuPermissions(t *testing.T) {
 	}
 }
 
-func testPermissionsReload(t *testing.T) {
+func testMenusReload(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -844,14 +844,14 @@ func testPermissionsReload(t *testing.T) {
 	}
 }
 
-func testPermissionsReloadAll(t *testing.T) {
+func testMenusReloadAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -861,21 +861,21 @@ func testPermissionsReloadAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := PermissionSlice{o}
+	slice := MenuSlice{o}
 
 	if err = slice.ReloadAll(ctx, tx); err != nil {
 		t.Error(err)
 	}
 }
 
-func testPermissionsSelect(t *testing.T) {
+func testMenusSelect(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -885,7 +885,7 @@ func testPermissionsSelect(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice, err := Permissions().All(ctx, tx)
+	slice, err := Menus().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -896,25 +896,25 @@ func testPermissionsSelect(t *testing.T) {
 }
 
 var (
-	permissionDBTypes = map[string]string{`ID`: `integer`, `Name`: `character varying`, `CreatedAt`: `timestamp without time zone`, `UpdatedAt`: `timestamp without time zone`, `DeletedAt`: `timestamp without time zone`, `Slug`: `character varying`}
-	_                 = bytes.MinRead
+	menuDBTypes = map[string]string{`ID`: `integer`, `Name`: `character varying`, `Slug`: `character varying`, `CreatedAt`: `timestamp without time zone`, `UpdatedAt`: `timestamp without time zone`, `DeletedAt`: `timestamp without time zone`}
+	_           = bytes.MinRead
 )
 
-func testPermissionsUpdate(t *testing.T) {
+func testMenusUpdate(t *testing.T) {
 	t.Parallel()
 
-	if 0 == len(permissionPrimaryKeyColumns) {
+	if 0 == len(menuPrimaryKeyColumns) {
 		t.Skip("Skipping table with no primary key columns")
 	}
-	if len(permissionAllColumns) == len(permissionPrimaryKeyColumns) {
+	if len(menuAllColumns) == len(menuPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -924,7 +924,7 @@ func testPermissionsUpdate(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -933,8 +933,8 @@ func testPermissionsUpdate(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	if rowsAff, err := o.Update(ctx, tx, boil.Infer()); err != nil {
@@ -944,18 +944,18 @@ func testPermissionsUpdate(t *testing.T) {
 	}
 }
 
-func testPermissionsSliceUpdateAll(t *testing.T) {
+func testMenusSliceUpdateAll(t *testing.T) {
 	t.Parallel()
 
-	if len(permissionAllColumns) == len(permissionPrimaryKeyColumns) {
+	if len(menuAllColumns) == len(menuPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Permission{}
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := &Menu{}
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -965,7 +965,7 @@ func testPermissionsSliceUpdateAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -974,18 +974,18 @@ func testPermissionsSliceUpdateAll(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, permissionDBTypes, true, permissionPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	if err = randomize.Struct(seed, o, menuDBTypes, true, menuPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	// Remove Primary keys and unique columns from what we plan to update
 	var fields []string
-	if strmangle.StringSliceMatch(permissionAllColumns, permissionPrimaryKeyColumns) {
-		fields = permissionAllColumns
+	if strmangle.StringSliceMatch(menuAllColumns, menuPrimaryKeyColumns) {
+		fields = menuAllColumns
 	} else {
 		fields = strmangle.SetComplement(
-			permissionAllColumns,
-			permissionPrimaryKeyColumns,
+			menuAllColumns,
+			menuPrimaryKeyColumns,
 		)
 	}
 
@@ -1003,7 +1003,7 @@ func testPermissionsSliceUpdateAll(t *testing.T) {
 		}
 	}
 
-	slice := PermissionSlice{o}
+	slice := MenuSlice{o}
 	if rowsAff, err := slice.UpdateAll(ctx, tx, updateMap); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
@@ -1011,29 +1011,29 @@ func testPermissionsSliceUpdateAll(t *testing.T) {
 	}
 }
 
-func testPermissionsUpsert(t *testing.T) {
+func testMenusUpsert(t *testing.T) {
 	t.Parallel()
 
-	if len(permissionAllColumns) == len(permissionPrimaryKeyColumns) {
+	if len(menuAllColumns) == len(menuPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
 	// Attempt the INSERT side of an UPSERT
-	o := Permission{}
-	if err = randomize.Struct(seed, &o, permissionDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	o := Menu{}
+	if err = randomize.Struct(seed, &o, menuDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 	if err = o.Upsert(ctx, tx, false, nil, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert Permission: %s", err)
+		t.Errorf("Unable to upsert Menu: %s", err)
 	}
 
-	count, err := Permissions().Count(ctx, tx)
+	count, err := Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1042,15 +1042,15 @@ func testPermissionsUpsert(t *testing.T) {
 	}
 
 	// Attempt the UPDATE side of an UPSERT
-	if err = randomize.Struct(seed, &o, permissionDBTypes, false, permissionPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	if err = randomize.Struct(seed, &o, menuDBTypes, false, menuPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Menu struct: %s", err)
 	}
 
 	if err = o.Upsert(ctx, tx, true, nil, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert Permission: %s", err)
+		t.Errorf("Unable to upsert Menu: %s", err)
 	}
 
-	count, err = Permissions().Count(ctx, tx)
+	count, err = Menus().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}

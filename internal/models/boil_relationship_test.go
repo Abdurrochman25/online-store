@@ -8,8 +8,10 @@ import "testing"
 // TestToOne tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOne(t *testing.T) {
-	t.Run("RolePermissionToPermissionUsingPermission", testRolePermissionToOnePermissionUsingPermission)
-	t.Run("RolePermissionToRoleUsingRole", testRolePermissionToOneRoleUsingRole)
+	t.Run("MenuPermissionToMenuUsingMenu", testMenuPermissionToOneMenuUsingMenu)
+	t.Run("MenuPermissionToPermissionUsingPermission", testMenuPermissionToOnePermissionUsingPermission)
+	t.Run("RoleMenuPermissionToMenuPermissionUsingMenuPermission", testRoleMenuPermissionToOneMenuPermissionUsingMenuPermission)
+	t.Run("RoleMenuPermissionToRoleUsingRole", testRoleMenuPermissionToOneRoleUsingRole)
 	t.Run("UserToRoleUsingRole", testUserToOneRoleUsingRole)
 }
 
@@ -20,24 +22,30 @@ func TestOneToOne(t *testing.T) {}
 // TestToMany tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToMany(t *testing.T) {
-	t.Run("PermissionToRolePermissions", testPermissionToManyRolePermissions)
-	t.Run("RoleToRolePermissions", testRoleToManyRolePermissions)
+	t.Run("MenuPermissionToRoleMenuPermissions", testMenuPermissionToManyRoleMenuPermissions)
+	t.Run("MenuToMenuPermissions", testMenuToManyMenuPermissions)
+	t.Run("PermissionToMenuPermissions", testPermissionToManyMenuPermissions)
+	t.Run("RoleToRoleMenuPermissions", testRoleToManyRoleMenuPermissions)
 	t.Run("RoleToUsers", testRoleToManyUsers)
 }
 
 // TestToOneSet tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOneSet(t *testing.T) {
-	t.Run("RolePermissionToPermissionUsingRolePermissions", testRolePermissionToOneSetOpPermissionUsingPermission)
-	t.Run("RolePermissionToRoleUsingRolePermissions", testRolePermissionToOneSetOpRoleUsingRole)
+	t.Run("MenuPermissionToMenuUsingMenuPermissions", testMenuPermissionToOneSetOpMenuUsingMenu)
+	t.Run("MenuPermissionToPermissionUsingMenuPermissions", testMenuPermissionToOneSetOpPermissionUsingPermission)
+	t.Run("RoleMenuPermissionToMenuPermissionUsingRoleMenuPermissions", testRoleMenuPermissionToOneSetOpMenuPermissionUsingMenuPermission)
+	t.Run("RoleMenuPermissionToRoleUsingRoleMenuPermissions", testRoleMenuPermissionToOneSetOpRoleUsingRole)
 	t.Run("UserToRoleUsingUsers", testUserToOneSetOpRoleUsingRole)
 }
 
 // TestToOneRemove tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOneRemove(t *testing.T) {
-	t.Run("RolePermissionToPermissionUsingRolePermissions", testRolePermissionToOneRemoveOpPermissionUsingPermission)
-	t.Run("RolePermissionToRoleUsingRolePermissions", testRolePermissionToOneRemoveOpRoleUsingRole)
+	t.Run("MenuPermissionToMenuUsingMenuPermissions", testMenuPermissionToOneRemoveOpMenuUsingMenu)
+	t.Run("MenuPermissionToPermissionUsingMenuPermissions", testMenuPermissionToOneRemoveOpPermissionUsingPermission)
+	t.Run("RoleMenuPermissionToMenuPermissionUsingRoleMenuPermissions", testRoleMenuPermissionToOneRemoveOpMenuPermissionUsingMenuPermission)
+	t.Run("RoleMenuPermissionToRoleUsingRoleMenuPermissions", testRoleMenuPermissionToOneRemoveOpRoleUsingRole)
 	t.Run("UserToRoleUsingUsers", testUserToOneRemoveOpRoleUsingRole)
 }
 
@@ -52,23 +60,29 @@ func TestOneToOneRemove(t *testing.T) {}
 // TestToManyAdd tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToManyAdd(t *testing.T) {
-	t.Run("PermissionToRolePermissions", testPermissionToManyAddOpRolePermissions)
-	t.Run("RoleToRolePermissions", testRoleToManyAddOpRolePermissions)
+	t.Run("MenuPermissionToRoleMenuPermissions", testMenuPermissionToManyAddOpRoleMenuPermissions)
+	t.Run("MenuToMenuPermissions", testMenuToManyAddOpMenuPermissions)
+	t.Run("PermissionToMenuPermissions", testPermissionToManyAddOpMenuPermissions)
+	t.Run("RoleToRoleMenuPermissions", testRoleToManyAddOpRoleMenuPermissions)
 	t.Run("RoleToUsers", testRoleToManyAddOpUsers)
 }
 
 // TestToManySet tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToManySet(t *testing.T) {
-	t.Run("PermissionToRolePermissions", testPermissionToManySetOpRolePermissions)
-	t.Run("RoleToRolePermissions", testRoleToManySetOpRolePermissions)
+	t.Run("MenuPermissionToRoleMenuPermissions", testMenuPermissionToManySetOpRoleMenuPermissions)
+	t.Run("MenuToMenuPermissions", testMenuToManySetOpMenuPermissions)
+	t.Run("PermissionToMenuPermissions", testPermissionToManySetOpMenuPermissions)
+	t.Run("RoleToRoleMenuPermissions", testRoleToManySetOpRoleMenuPermissions)
 	t.Run("RoleToUsers", testRoleToManySetOpUsers)
 }
 
 // TestToManyRemove tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToManyRemove(t *testing.T) {
-	t.Run("PermissionToRolePermissions", testPermissionToManyRemoveOpRolePermissions)
-	t.Run("RoleToRolePermissions", testRoleToManyRemoveOpRolePermissions)
+	t.Run("MenuPermissionToRoleMenuPermissions", testMenuPermissionToManyRemoveOpRoleMenuPermissions)
+	t.Run("MenuToMenuPermissions", testMenuToManyRemoveOpMenuPermissions)
+	t.Run("PermissionToMenuPermissions", testPermissionToManyRemoveOpMenuPermissions)
+	t.Run("RoleToRoleMenuPermissions", testRoleToManyRemoveOpRoleMenuPermissions)
 	t.Run("RoleToUsers", testRoleToManyRemoveOpUsers)
 }

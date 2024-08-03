@@ -494,14 +494,14 @@ func testRolesInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testRoleToManyRolePermissions(t *testing.T) {
+func testRoleToManyRoleMenuPermissions(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
 	var a Role
-	var b, c RolePermission
+	var b, c RoleMenuPermission
 
 	seed := randomize.NewSeed()
 	if err = randomize.Struct(seed, &a, roleDBTypes, true, roleColumnsWithDefault...); err != nil {
@@ -512,10 +512,10 @@ func testRoleToManyRolePermissions(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err = randomize.Struct(seed, &b, rolePermissionDBTypes, false, rolePermissionColumnsWithDefault...); err != nil {
+	if err = randomize.Struct(seed, &b, roleMenuPermissionDBTypes, false, roleMenuPermissionColumnsWithDefault...); err != nil {
 		t.Fatal(err)
 	}
-	if err = randomize.Struct(seed, &c, rolePermissionDBTypes, false, rolePermissionColumnsWithDefault...); err != nil {
+	if err = randomize.Struct(seed, &c, roleMenuPermissionDBTypes, false, roleMenuPermissionColumnsWithDefault...); err != nil {
 		t.Fatal(err)
 	}
 
@@ -528,7 +528,7 @@ func testRoleToManyRolePermissions(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	check, err := a.RolePermissions().All(ctx, tx)
+	check, err := a.RoleMenuPermissions().All(ctx, tx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -551,18 +551,18 @@ func testRoleToManyRolePermissions(t *testing.T) {
 	}
 
 	slice := RoleSlice{&a}
-	if err = a.L.LoadRolePermissions(ctx, tx, false, (*[]*Role)(&slice), nil); err != nil {
+	if err = a.L.LoadRoleMenuPermissions(ctx, tx, false, (*[]*Role)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
-	if got := len(a.R.RolePermissions); got != 2 {
+	if got := len(a.R.RoleMenuPermissions); got != 2 {
 		t.Error("number of eager loaded records wrong, got:", got)
 	}
 
-	a.R.RolePermissions = nil
-	if err = a.L.LoadRolePermissions(ctx, tx, true, &a, nil); err != nil {
+	a.R.RoleMenuPermissions = nil
+	if err = a.L.LoadRoleMenuPermissions(ctx, tx, true, &a, nil); err != nil {
 		t.Fatal(err)
 	}
-	if got := len(a.R.RolePermissions); got != 2 {
+	if got := len(a.R.RoleMenuPermissions); got != 2 {
 		t.Error("number of eager loaded records wrong, got:", got)
 	}
 
@@ -648,7 +648,7 @@ func testRoleToManyUsers(t *testing.T) {
 	}
 }
 
-func testRoleToManyAddOpRolePermissions(t *testing.T) {
+func testRoleToManyAddOpRoleMenuPermissions(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
@@ -656,15 +656,15 @@ func testRoleToManyAddOpRolePermissions(t *testing.T) {
 	defer func() { _ = tx.Rollback() }()
 
 	var a Role
-	var b, c, d, e RolePermission
+	var b, c, d, e RoleMenuPermission
 
 	seed := randomize.NewSeed()
 	if err = randomize.Struct(seed, &a, roleDBTypes, false, strmangle.SetComplement(rolePrimaryKeyColumns, roleColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
-	foreigners := []*RolePermission{&b, &c, &d, &e}
+	foreigners := []*RoleMenuPermission{&b, &c, &d, &e}
 	for _, x := range foreigners {
-		if err = randomize.Struct(seed, x, rolePermissionDBTypes, false, strmangle.SetComplement(rolePermissionPrimaryKeyColumns, rolePermissionColumnsWithoutDefault)...); err != nil {
+		if err = randomize.Struct(seed, x, roleMenuPermissionDBTypes, false, strmangle.SetComplement(roleMenuPermissionPrimaryKeyColumns, roleMenuPermissionColumnsWithoutDefault)...); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -679,13 +679,13 @@ func testRoleToManyAddOpRolePermissions(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	foreignersSplitByInsertion := [][]*RolePermission{
+	foreignersSplitByInsertion := [][]*RoleMenuPermission{
 		{&b, &c},
 		{&d, &e},
 	}
 
 	for i, x := range foreignersSplitByInsertion {
-		err = a.AddRolePermissions(ctx, tx, i != 0, x...)
+		err = a.AddRoleMenuPermissions(ctx, tx, i != 0, x...)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -707,14 +707,14 @@ func testRoleToManyAddOpRolePermissions(t *testing.T) {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
 
-		if a.R.RolePermissions[i*2] != first {
+		if a.R.RoleMenuPermissions[i*2] != first {
 			t.Error("relationship struct slice not set to correct value")
 		}
-		if a.R.RolePermissions[i*2+1] != second {
+		if a.R.RoleMenuPermissions[i*2+1] != second {
 			t.Error("relationship struct slice not set to correct value")
 		}
 
-		count, err := a.RolePermissions().Count(ctx, tx)
+		count, err := a.RoleMenuPermissions().Count(ctx, tx)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -724,7 +724,7 @@ func testRoleToManyAddOpRolePermissions(t *testing.T) {
 	}
 }
 
-func testRoleToManySetOpRolePermissions(t *testing.T) {
+func testRoleToManySetOpRoleMenuPermissions(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
@@ -732,15 +732,15 @@ func testRoleToManySetOpRolePermissions(t *testing.T) {
 	defer func() { _ = tx.Rollback() }()
 
 	var a Role
-	var b, c, d, e RolePermission
+	var b, c, d, e RoleMenuPermission
 
 	seed := randomize.NewSeed()
 	if err = randomize.Struct(seed, &a, roleDBTypes, false, strmangle.SetComplement(rolePrimaryKeyColumns, roleColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
-	foreigners := []*RolePermission{&b, &c, &d, &e}
+	foreigners := []*RoleMenuPermission{&b, &c, &d, &e}
 	for _, x := range foreigners {
-		if err = randomize.Struct(seed, x, rolePermissionDBTypes, false, strmangle.SetComplement(rolePermissionPrimaryKeyColumns, rolePermissionColumnsWithoutDefault)...); err != nil {
+		if err = randomize.Struct(seed, x, roleMenuPermissionDBTypes, false, strmangle.SetComplement(roleMenuPermissionPrimaryKeyColumns, roleMenuPermissionColumnsWithoutDefault)...); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -755,12 +755,12 @@ func testRoleToManySetOpRolePermissions(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	err = a.SetRolePermissions(ctx, tx, false, &b, &c)
+	err = a.SetRoleMenuPermissions(ctx, tx, false, &b, &c)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	count, err := a.RolePermissions().Count(ctx, tx)
+	count, err := a.RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -768,12 +768,12 @@ func testRoleToManySetOpRolePermissions(t *testing.T) {
 		t.Error("count was wrong:", count)
 	}
 
-	err = a.SetRolePermissions(ctx, tx, true, &d, &e)
+	err = a.SetRoleMenuPermissions(ctx, tx, true, &d, &e)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	count, err = a.RolePermissions().Count(ctx, tx)
+	count, err = a.RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -807,15 +807,15 @@ func testRoleToManySetOpRolePermissions(t *testing.T) {
 		t.Error("relationship was not added properly to the foreign struct")
 	}
 
-	if a.R.RolePermissions[0] != &d {
+	if a.R.RoleMenuPermissions[0] != &d {
 		t.Error("relationship struct slice not set to correct value")
 	}
-	if a.R.RolePermissions[1] != &e {
+	if a.R.RoleMenuPermissions[1] != &e {
 		t.Error("relationship struct slice not set to correct value")
 	}
 }
 
-func testRoleToManyRemoveOpRolePermissions(t *testing.T) {
+func testRoleToManyRemoveOpRoleMenuPermissions(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
@@ -823,15 +823,15 @@ func testRoleToManyRemoveOpRolePermissions(t *testing.T) {
 	defer func() { _ = tx.Rollback() }()
 
 	var a Role
-	var b, c, d, e RolePermission
+	var b, c, d, e RoleMenuPermission
 
 	seed := randomize.NewSeed()
 	if err = randomize.Struct(seed, &a, roleDBTypes, false, strmangle.SetComplement(rolePrimaryKeyColumns, roleColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
-	foreigners := []*RolePermission{&b, &c, &d, &e}
+	foreigners := []*RoleMenuPermission{&b, &c, &d, &e}
 	for _, x := range foreigners {
-		if err = randomize.Struct(seed, x, rolePermissionDBTypes, false, strmangle.SetComplement(rolePermissionPrimaryKeyColumns, rolePermissionColumnsWithoutDefault)...); err != nil {
+		if err = randomize.Struct(seed, x, roleMenuPermissionDBTypes, false, strmangle.SetComplement(roleMenuPermissionPrimaryKeyColumns, roleMenuPermissionColumnsWithoutDefault)...); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -840,12 +840,12 @@ func testRoleToManyRemoveOpRolePermissions(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	err = a.AddRolePermissions(ctx, tx, true, foreigners...)
+	err = a.AddRoleMenuPermissions(ctx, tx, true, foreigners...)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	count, err := a.RolePermissions().Count(ctx, tx)
+	count, err := a.RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -853,12 +853,12 @@ func testRoleToManyRemoveOpRolePermissions(t *testing.T) {
 		t.Error("count was wrong:", count)
 	}
 
-	err = a.RemoveRolePermissions(ctx, tx, foreigners[:2]...)
+	err = a.RemoveRoleMenuPermissions(ctx, tx, foreigners[:2]...)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	count, err = a.RolePermissions().Count(ctx, tx)
+	count, err = a.RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -886,15 +886,15 @@ func testRoleToManyRemoveOpRolePermissions(t *testing.T) {
 		t.Error("relationship to a should have been preserved")
 	}
 
-	if len(a.R.RolePermissions) != 2 {
+	if len(a.R.RoleMenuPermissions) != 2 {
 		t.Error("should have preserved two relationships")
 	}
 
 	// Removal doesn't do a stable deletion for performance so we have to flip the order
-	if a.R.RolePermissions[1] != &d {
+	if a.R.RoleMenuPermissions[1] != &d {
 		t.Error("relationship to d should have been preserved")
 	}
-	if a.R.RolePermissions[0] != &e {
+	if a.R.RoleMenuPermissions[0] != &e {
 		t.Error("relationship to e should have been preserved")
 	}
 }
@@ -1224,7 +1224,7 @@ func testRolesSelect(t *testing.T) {
 }
 
 var (
-	roleDBTypes = map[string]string{`ID`: `integer`, `Name`: `character varying`, `CreatedAt`: `timestamp without time zone`, `UpdatedAt`: `timestamp without time zone`, `DeletedAt`: `timestamp without time zone`}
+	roleDBTypes = map[string]string{`ID`: `integer`, `Name`: `character varying`, `CreatedAt`: `timestamp without time zone`, `UpdatedAt`: `timestamp without time zone`, `DeletedAt`: `timestamp without time zone`, `Slug`: `character varying`}
 	_           = bytes.MinRead
 )
 

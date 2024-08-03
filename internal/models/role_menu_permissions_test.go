@@ -21,24 +21,24 @@ var (
 	_ = queries.Equal
 )
 
-func testRolePermissions(t *testing.T) {
+func testRoleMenuPermissions(t *testing.T) {
 	t.Parallel()
 
-	query := RolePermissions()
+	query := RoleMenuPermissions()
 
 	if query.Query == nil {
 		t.Error("expected a query, got nothing")
 	}
 }
 
-func testRolePermissionsDelete(t *testing.T) {
+func testRoleMenuPermissionsDelete(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -54,7 +54,7 @@ func testRolePermissionsDelete(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -64,14 +64,14 @@ func testRolePermissionsDelete(t *testing.T) {
 	}
 }
 
-func testRolePermissionsQueryDeleteAll(t *testing.T) {
+func testRoleMenuPermissionsQueryDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -81,13 +81,13 @@ func testRolePermissionsQueryDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	if rowsAff, err := RolePermissions().DeleteAll(ctx, tx); err != nil {
+	if rowsAff, err := RoleMenuPermissions().DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -97,14 +97,14 @@ func testRolePermissionsQueryDeleteAll(t *testing.T) {
 	}
 }
 
-func testRolePermissionsSliceDeleteAll(t *testing.T) {
+func testRoleMenuPermissionsSliceDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -114,7 +114,7 @@ func testRolePermissionsSliceDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := RolePermissionSlice{o}
+	slice := RoleMenuPermissionSlice{o}
 
 	if rowsAff, err := slice.DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
@@ -122,7 +122,7 @@ func testRolePermissionsSliceDeleteAll(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -132,14 +132,14 @@ func testRolePermissionsSliceDeleteAll(t *testing.T) {
 	}
 }
 
-func testRolePermissionsExists(t *testing.T) {
+func testRoleMenuPermissionsExists(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -149,23 +149,23 @@ func testRolePermissionsExists(t *testing.T) {
 		t.Error(err)
 	}
 
-	e, err := RolePermissionExists(ctx, tx, o.ID)
+	e, err := RoleMenuPermissionExists(ctx, tx, o.ID)
 	if err != nil {
-		t.Errorf("Unable to check if RolePermission exists: %s", err)
+		t.Errorf("Unable to check if RoleMenuPermission exists: %s", err)
 	}
 	if !e {
-		t.Errorf("Expected RolePermissionExists to return true, but got false.")
+		t.Errorf("Expected RoleMenuPermissionExists to return true, but got false.")
 	}
 }
 
-func testRolePermissionsFind(t *testing.T) {
+func testRoleMenuPermissionsFind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -175,24 +175,24 @@ func testRolePermissionsFind(t *testing.T) {
 		t.Error(err)
 	}
 
-	rolePermissionFound, err := FindRolePermission(ctx, tx, o.ID)
+	roleMenuPermissionFound, err := FindRoleMenuPermission(ctx, tx, o.ID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if rolePermissionFound == nil {
+	if roleMenuPermissionFound == nil {
 		t.Error("want a record, got nil")
 	}
 }
 
-func testRolePermissionsBind(t *testing.T) {
+func testRoleMenuPermissionsBind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -202,19 +202,19 @@ func testRolePermissionsBind(t *testing.T) {
 		t.Error(err)
 	}
 
-	if err = RolePermissions().Bind(ctx, tx, o); err != nil {
+	if err = RoleMenuPermissions().Bind(ctx, tx, o); err != nil {
 		t.Error(err)
 	}
 }
 
-func testRolePermissionsOne(t *testing.T) {
+func testRoleMenuPermissionsOne(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -224,38 +224,38 @@ func testRolePermissionsOne(t *testing.T) {
 		t.Error(err)
 	}
 
-	if x, err := RolePermissions().One(ctx, tx); err != nil {
+	if x, err := RoleMenuPermissions().One(ctx, tx); err != nil {
 		t.Error(err)
 	} else if x == nil {
 		t.Error("expected to get a non nil record")
 	}
 }
 
-func testRolePermissionsAll(t *testing.T) {
+func testRoleMenuPermissionsAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	rolePermissionOne := &RolePermission{}
-	rolePermissionTwo := &RolePermission{}
-	if err = randomize.Struct(seed, rolePermissionOne, rolePermissionDBTypes, false, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	roleMenuPermissionOne := &RoleMenuPermission{}
+	roleMenuPermissionTwo := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, roleMenuPermissionOne, roleMenuPermissionDBTypes, false, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
-	if err = randomize.Struct(seed, rolePermissionTwo, rolePermissionDBTypes, false, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	if err = randomize.Struct(seed, roleMenuPermissionTwo, roleMenuPermissionDBTypes, false, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = rolePermissionOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = roleMenuPermissionOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = rolePermissionTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = roleMenuPermissionTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	slice, err := RolePermissions().All(ctx, tx)
+	slice, err := RoleMenuPermissions().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -265,31 +265,31 @@ func testRolePermissionsAll(t *testing.T) {
 	}
 }
 
-func testRolePermissionsCount(t *testing.T) {
+func testRoleMenuPermissionsCount(t *testing.T) {
 	t.Parallel()
 
 	var err error
 	seed := randomize.NewSeed()
-	rolePermissionOne := &RolePermission{}
-	rolePermissionTwo := &RolePermission{}
-	if err = randomize.Struct(seed, rolePermissionOne, rolePermissionDBTypes, false, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	roleMenuPermissionOne := &RoleMenuPermission{}
+	roleMenuPermissionTwo := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, roleMenuPermissionOne, roleMenuPermissionDBTypes, false, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
-	if err = randomize.Struct(seed, rolePermissionTwo, rolePermissionDBTypes, false, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	if err = randomize.Struct(seed, roleMenuPermissionTwo, roleMenuPermissionDBTypes, false, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = rolePermissionOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = roleMenuPermissionOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = rolePermissionTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = roleMenuPermissionTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -299,155 +299,155 @@ func testRolePermissionsCount(t *testing.T) {
 	}
 }
 
-func rolePermissionBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func rolePermissionAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func rolePermissionAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func rolePermissionBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func rolePermissionAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func rolePermissionBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func rolePermissionAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func rolePermissionBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func rolePermissionAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *RolePermission) error {
-	*o = RolePermission{}
+func roleMenuPermissionAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *RoleMenuPermission) error {
+	*o = RoleMenuPermission{}
 	return nil
 }
 
-func testRolePermissionsHooks(t *testing.T) {
+func testRoleMenuPermissionsHooks(t *testing.T) {
 	t.Parallel()
 
 	var err error
 
 	ctx := context.Background()
-	empty := &RolePermission{}
-	o := &RolePermission{}
+	empty := &RoleMenuPermission{}
+	o := &RoleMenuPermission{}
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, false); err != nil {
-		t.Errorf("Unable to randomize RolePermission object: %s", err)
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, false); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission object: %s", err)
 	}
 
-	AddRolePermissionHook(boil.BeforeInsertHook, rolePermissionBeforeInsertHook)
+	AddRoleMenuPermissionHook(boil.BeforeInsertHook, roleMenuPermissionBeforeInsertHook)
 	if err = o.doBeforeInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeInsertHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionBeforeInsertHooks = []RolePermissionHook{}
+	roleMenuPermissionBeforeInsertHooks = []RoleMenuPermissionHook{}
 
-	AddRolePermissionHook(boil.AfterInsertHook, rolePermissionAfterInsertHook)
+	AddRoleMenuPermissionHook(boil.AfterInsertHook, roleMenuPermissionAfterInsertHook)
 	if err = o.doAfterInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterInsertHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionAfterInsertHooks = []RolePermissionHook{}
+	roleMenuPermissionAfterInsertHooks = []RoleMenuPermissionHook{}
 
-	AddRolePermissionHook(boil.AfterSelectHook, rolePermissionAfterSelectHook)
+	AddRoleMenuPermissionHook(boil.AfterSelectHook, roleMenuPermissionAfterSelectHook)
 	if err = o.doAfterSelectHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterSelectHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterSelectHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionAfterSelectHooks = []RolePermissionHook{}
+	roleMenuPermissionAfterSelectHooks = []RoleMenuPermissionHook{}
 
-	AddRolePermissionHook(boil.BeforeUpdateHook, rolePermissionBeforeUpdateHook)
+	AddRoleMenuPermissionHook(boil.BeforeUpdateHook, roleMenuPermissionBeforeUpdateHook)
 	if err = o.doBeforeUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpdateHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionBeforeUpdateHooks = []RolePermissionHook{}
+	roleMenuPermissionBeforeUpdateHooks = []RoleMenuPermissionHook{}
 
-	AddRolePermissionHook(boil.AfterUpdateHook, rolePermissionAfterUpdateHook)
+	AddRoleMenuPermissionHook(boil.AfterUpdateHook, roleMenuPermissionAfterUpdateHook)
 	if err = o.doAfterUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpdateHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionAfterUpdateHooks = []RolePermissionHook{}
+	roleMenuPermissionAfterUpdateHooks = []RoleMenuPermissionHook{}
 
-	AddRolePermissionHook(boil.BeforeDeleteHook, rolePermissionBeforeDeleteHook)
+	AddRoleMenuPermissionHook(boil.BeforeDeleteHook, roleMenuPermissionBeforeDeleteHook)
 	if err = o.doBeforeDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeDeleteHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionBeforeDeleteHooks = []RolePermissionHook{}
+	roleMenuPermissionBeforeDeleteHooks = []RoleMenuPermissionHook{}
 
-	AddRolePermissionHook(boil.AfterDeleteHook, rolePermissionAfterDeleteHook)
+	AddRoleMenuPermissionHook(boil.AfterDeleteHook, roleMenuPermissionAfterDeleteHook)
 	if err = o.doAfterDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterDeleteHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionAfterDeleteHooks = []RolePermissionHook{}
+	roleMenuPermissionAfterDeleteHooks = []RoleMenuPermissionHook{}
 
-	AddRolePermissionHook(boil.BeforeUpsertHook, rolePermissionBeforeUpsertHook)
+	AddRoleMenuPermissionHook(boil.BeforeUpsertHook, roleMenuPermissionBeforeUpsertHook)
 	if err = o.doBeforeUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpsertHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionBeforeUpsertHooks = []RolePermissionHook{}
+	roleMenuPermissionBeforeUpsertHooks = []RoleMenuPermissionHook{}
 
-	AddRolePermissionHook(boil.AfterUpsertHook, rolePermissionAfterUpsertHook)
+	AddRoleMenuPermissionHook(boil.AfterUpsertHook, roleMenuPermissionAfterUpsertHook)
 	if err = o.doAfterUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpsertHook function to empty object, but got: %#v", o)
 	}
-	rolePermissionAfterUpsertHooks = []RolePermissionHook{}
+	roleMenuPermissionAfterUpsertHooks = []RoleMenuPermissionHook{}
 }
 
-func testRolePermissionsInsert(t *testing.T) {
+func testRoleMenuPermissionsInsert(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -457,7 +457,7 @@ func testRolePermissionsInsert(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -467,24 +467,24 @@ func testRolePermissionsInsert(t *testing.T) {
 	}
 }
 
-func testRolePermissionsInsertWhitelist(t *testing.T) {
+func testRoleMenuPermissionsInsertWhitelist(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = o.Insert(ctx, tx, boil.Whitelist(rolePermissionColumnsWithoutDefault...)); err != nil {
+	if err = o.Insert(ctx, tx, boil.Whitelist(roleMenuPermissionColumnsWithoutDefault...)); err != nil {
 		t.Error(err)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -494,32 +494,32 @@ func testRolePermissionsInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testRolePermissionToOnePermissionUsingPermission(t *testing.T) {
+func testRoleMenuPermissionToOneMenuPermissionUsingMenuPermission(t *testing.T) {
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var local RolePermission
-	var foreign Permission
+	var local RoleMenuPermission
+	var foreign MenuPermission
 
 	seed := randomize.NewSeed()
-	if err := randomize.Struct(seed, &local, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	if err := randomize.Struct(seed, &local, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
-	if err := randomize.Struct(seed, &foreign, permissionDBTypes, false, permissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Permission struct: %s", err)
+	if err := randomize.Struct(seed, &foreign, menuPermissionDBTypes, false, menuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize MenuPermission struct: %s", err)
 	}
 
 	if err := foreign.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Fatal(err)
 	}
 
-	queries.Assign(&local.PermissionID, foreign.ID)
+	queries.Assign(&local.MenuPermissionID, foreign.ID)
 	if err := local.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Fatal(err)
 	}
 
-	check, err := local.Permission().One(ctx, tx)
+	check, err := local.MenuPermission().One(ctx, tx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -529,24 +529,24 @@ func testRolePermissionToOnePermissionUsingPermission(t *testing.T) {
 	}
 
 	ranAfterSelectHook := false
-	AddPermissionHook(boil.AfterSelectHook, func(ctx context.Context, e boil.ContextExecutor, o *Permission) error {
+	AddMenuPermissionHook(boil.AfterSelectHook, func(ctx context.Context, e boil.ContextExecutor, o *MenuPermission) error {
 		ranAfterSelectHook = true
 		return nil
 	})
 
-	slice := RolePermissionSlice{&local}
-	if err = local.L.LoadPermission(ctx, tx, false, (*[]*RolePermission)(&slice), nil); err != nil {
+	slice := RoleMenuPermissionSlice{&local}
+	if err = local.L.LoadMenuPermission(ctx, tx, false, (*[]*RoleMenuPermission)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
-	if local.R.Permission == nil {
+	if local.R.MenuPermission == nil {
 		t.Error("struct should have been eager loaded")
 	}
 
-	local.R.Permission = nil
-	if err = local.L.LoadPermission(ctx, tx, true, &local, nil); err != nil {
+	local.R.MenuPermission = nil
+	if err = local.L.LoadMenuPermission(ctx, tx, true, &local, nil); err != nil {
 		t.Fatal(err)
 	}
-	if local.R.Permission == nil {
+	if local.R.MenuPermission == nil {
 		t.Error("struct should have been eager loaded")
 	}
 
@@ -555,17 +555,17 @@ func testRolePermissionToOnePermissionUsingPermission(t *testing.T) {
 	}
 }
 
-func testRolePermissionToOneRoleUsingRole(t *testing.T) {
+func testRoleMenuPermissionToOneRoleUsingRole(t *testing.T) {
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var local RolePermission
+	var local RoleMenuPermission
 	var foreign Role
 
 	seed := randomize.NewSeed()
-	if err := randomize.Struct(seed, &local, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	if err := randomize.Struct(seed, &local, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 	if err := randomize.Struct(seed, &foreign, roleDBTypes, false, roleColumnsWithDefault...); err != nil {
 		t.Errorf("Unable to randomize Role struct: %s", err)
@@ -595,8 +595,8 @@ func testRolePermissionToOneRoleUsingRole(t *testing.T) {
 		return nil
 	})
 
-	slice := RolePermissionSlice{&local}
-	if err = local.L.LoadRole(ctx, tx, false, (*[]*RolePermission)(&slice), nil); err != nil {
+	slice := RoleMenuPermissionSlice{&local}
+	if err = local.L.LoadRole(ctx, tx, false, (*[]*RoleMenuPermission)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
 	if local.R.Role == nil {
@@ -616,24 +616,24 @@ func testRolePermissionToOneRoleUsingRole(t *testing.T) {
 	}
 }
 
-func testRolePermissionToOneSetOpPermissionUsingPermission(t *testing.T) {
+func testRoleMenuPermissionToOneSetOpMenuPermissionUsingMenuPermission(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a RolePermission
-	var b, c Permission
+	var a RoleMenuPermission
+	var b, c MenuPermission
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, rolePermissionDBTypes, false, strmangle.SetComplement(rolePermissionPrimaryKeyColumns, rolePermissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, roleMenuPermissionDBTypes, false, strmangle.SetComplement(roleMenuPermissionPrimaryKeyColumns, roleMenuPermissionColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
-	if err = randomize.Struct(seed, &b, permissionDBTypes, false, strmangle.SetComplement(permissionPrimaryKeyColumns, permissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &b, menuPermissionDBTypes, false, strmangle.SetComplement(menuPermissionPrimaryKeyColumns, menuPermissionColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
-	if err = randomize.Struct(seed, &c, permissionDBTypes, false, strmangle.SetComplement(permissionPrimaryKeyColumns, permissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &c, menuPermissionDBTypes, false, strmangle.SetComplement(menuPermissionPrimaryKeyColumns, menuPermissionColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 
@@ -644,51 +644,51 @@ func testRolePermissionToOneSetOpPermissionUsingPermission(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	for i, x := range []*Permission{&b, &c} {
-		err = a.SetPermission(ctx, tx, i != 0, x)
+	for i, x := range []*MenuPermission{&b, &c} {
+		err = a.SetMenuPermission(ctx, tx, i != 0, x)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		if a.R.Permission != x {
+		if a.R.MenuPermission != x {
 			t.Error("relationship struct not set to correct value")
 		}
 
-		if x.R.RolePermissions[0] != &a {
+		if x.R.RoleMenuPermissions[0] != &a {
 			t.Error("failed to append to foreign relationship struct")
 		}
-		if !queries.Equal(a.PermissionID, x.ID) {
-			t.Error("foreign key was wrong value", a.PermissionID)
+		if !queries.Equal(a.MenuPermissionID, x.ID) {
+			t.Error("foreign key was wrong value", a.MenuPermissionID)
 		}
 
-		zero := reflect.Zero(reflect.TypeOf(a.PermissionID))
-		reflect.Indirect(reflect.ValueOf(&a.PermissionID)).Set(zero)
+		zero := reflect.Zero(reflect.TypeOf(a.MenuPermissionID))
+		reflect.Indirect(reflect.ValueOf(&a.MenuPermissionID)).Set(zero)
 
 		if err = a.Reload(ctx, tx); err != nil {
 			t.Fatal("failed to reload", err)
 		}
 
-		if !queries.Equal(a.PermissionID, x.ID) {
-			t.Error("foreign key was wrong value", a.PermissionID, x.ID)
+		if !queries.Equal(a.MenuPermissionID, x.ID) {
+			t.Error("foreign key was wrong value", a.MenuPermissionID, x.ID)
 		}
 	}
 }
 
-func testRolePermissionToOneRemoveOpPermissionUsingPermission(t *testing.T) {
+func testRoleMenuPermissionToOneRemoveOpMenuPermissionUsingMenuPermission(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a RolePermission
-	var b Permission
+	var a RoleMenuPermission
+	var b MenuPermission
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, rolePermissionDBTypes, false, strmangle.SetComplement(rolePermissionPrimaryKeyColumns, rolePermissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, roleMenuPermissionDBTypes, false, strmangle.SetComplement(roleMenuPermissionPrimaryKeyColumns, roleMenuPermissionColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
-	if err = randomize.Struct(seed, &b, permissionDBTypes, false, strmangle.SetComplement(permissionPrimaryKeyColumns, permissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &b, menuPermissionDBTypes, false, strmangle.SetComplement(menuPermissionPrimaryKeyColumns, menuPermissionColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 
@@ -696,15 +696,15 @@ func testRolePermissionToOneRemoveOpPermissionUsingPermission(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err = a.SetPermission(ctx, tx, true, &b); err != nil {
+	if err = a.SetMenuPermission(ctx, tx, true, &b); err != nil {
 		t.Fatal(err)
 	}
 
-	if err = a.RemovePermission(ctx, tx, &b); err != nil {
+	if err = a.RemoveMenuPermission(ctx, tx, &b); err != nil {
 		t.Error("failed to remove relationship")
 	}
 
-	count, err := a.Permission().Count(ctx, tx)
+	count, err := a.MenuPermission().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -712,31 +712,31 @@ func testRolePermissionToOneRemoveOpPermissionUsingPermission(t *testing.T) {
 		t.Error("want no relationships remaining")
 	}
 
-	if a.R.Permission != nil {
+	if a.R.MenuPermission != nil {
 		t.Error("R struct entry should be nil")
 	}
 
-	if !queries.IsValuerNil(a.PermissionID) {
+	if !queries.IsValuerNil(a.MenuPermissionID) {
 		t.Error("foreign key value should be nil")
 	}
 
-	if len(b.R.RolePermissions) != 0 {
+	if len(b.R.RoleMenuPermissions) != 0 {
 		t.Error("failed to remove a from b's relationships")
 	}
 }
 
-func testRolePermissionToOneSetOpRoleUsingRole(t *testing.T) {
+func testRoleMenuPermissionToOneSetOpRoleUsingRole(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a RolePermission
+	var a RoleMenuPermission
 	var b, c Role
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, rolePermissionDBTypes, false, strmangle.SetComplement(rolePermissionPrimaryKeyColumns, rolePermissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, roleMenuPermissionDBTypes, false, strmangle.SetComplement(roleMenuPermissionPrimaryKeyColumns, roleMenuPermissionColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	if err = randomize.Struct(seed, &b, roleDBTypes, false, strmangle.SetComplement(rolePrimaryKeyColumns, roleColumnsWithoutDefault)...); err != nil {
@@ -763,7 +763,7 @@ func testRolePermissionToOneSetOpRoleUsingRole(t *testing.T) {
 			t.Error("relationship struct not set to correct value")
 		}
 
-		if x.R.RolePermissions[0] != &a {
+		if x.R.RoleMenuPermissions[0] != &a {
 			t.Error("failed to append to foreign relationship struct")
 		}
 		if !queries.Equal(a.RoleID, x.ID) {
@@ -783,18 +783,18 @@ func testRolePermissionToOneSetOpRoleUsingRole(t *testing.T) {
 	}
 }
 
-func testRolePermissionToOneRemoveOpRoleUsingRole(t *testing.T) {
+func testRoleMenuPermissionToOneRemoveOpRoleUsingRole(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a RolePermission
+	var a RoleMenuPermission
 	var b Role
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, rolePermissionDBTypes, false, strmangle.SetComplement(rolePermissionPrimaryKeyColumns, rolePermissionColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, roleMenuPermissionDBTypes, false, strmangle.SetComplement(roleMenuPermissionPrimaryKeyColumns, roleMenuPermissionColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	if err = randomize.Struct(seed, &b, roleDBTypes, false, strmangle.SetComplement(rolePrimaryKeyColumns, roleColumnsWithoutDefault)...); err != nil {
@@ -829,19 +829,19 @@ func testRolePermissionToOneRemoveOpRoleUsingRole(t *testing.T) {
 		t.Error("foreign key value should be nil")
 	}
 
-	if len(b.R.RolePermissions) != 0 {
+	if len(b.R.RoleMenuPermissions) != 0 {
 		t.Error("failed to remove a from b's relationships")
 	}
 }
 
-func testRolePermissionsReload(t *testing.T) {
+func testRoleMenuPermissionsReload(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -856,14 +856,14 @@ func testRolePermissionsReload(t *testing.T) {
 	}
 }
 
-func testRolePermissionsReloadAll(t *testing.T) {
+func testRoleMenuPermissionsReloadAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -873,21 +873,21 @@ func testRolePermissionsReloadAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := RolePermissionSlice{o}
+	slice := RoleMenuPermissionSlice{o}
 
 	if err = slice.ReloadAll(ctx, tx); err != nil {
 		t.Error(err)
 	}
 }
 
-func testRolePermissionsSelect(t *testing.T) {
+func testRoleMenuPermissionsSelect(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -897,7 +897,7 @@ func testRolePermissionsSelect(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice, err := RolePermissions().All(ctx, tx)
+	slice, err := RoleMenuPermissions().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -908,25 +908,25 @@ func testRolePermissionsSelect(t *testing.T) {
 }
 
 var (
-	rolePermissionDBTypes = map[string]string{`ID`: `integer`, `RoleID`: `smallint`, `PermissionID`: `smallint`, `CreatedAt`: `timestamp without time zone`, `UpdatedAt`: `timestamp without time zone`, `DeletedAt`: `timestamp without time zone`}
-	_                     = bytes.MinRead
+	roleMenuPermissionDBTypes = map[string]string{`ID`: `integer`, `RoleID`: `smallint`, `MenuPermissionID`: `smallint`, `CreatedAt`: `timestamp without time zone`, `UpdatedAt`: `timestamp without time zone`, `DeletedAt`: `timestamp without time zone`}
+	_                         = bytes.MinRead
 )
 
-func testRolePermissionsUpdate(t *testing.T) {
+func testRoleMenuPermissionsUpdate(t *testing.T) {
 	t.Parallel()
 
-	if 0 == len(rolePermissionPrimaryKeyColumns) {
+	if 0 == len(roleMenuPermissionPrimaryKeyColumns) {
 		t.Skip("Skipping table with no primary key columns")
 	}
-	if len(rolePermissionAllColumns) == len(rolePermissionPrimaryKeyColumns) {
+	if len(roleMenuPermissionAllColumns) == len(roleMenuPermissionPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -936,7 +936,7 @@ func testRolePermissionsUpdate(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -945,8 +945,8 @@ func testRolePermissionsUpdate(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	if rowsAff, err := o.Update(ctx, tx, boil.Infer()); err != nil {
@@ -956,18 +956,18 @@ func testRolePermissionsUpdate(t *testing.T) {
 	}
 }
 
-func testRolePermissionsSliceUpdateAll(t *testing.T) {
+func testRoleMenuPermissionsSliceUpdateAll(t *testing.T) {
 	t.Parallel()
 
-	if len(rolePermissionAllColumns) == len(rolePermissionPrimaryKeyColumns) {
+	if len(roleMenuPermissionAllColumns) == len(roleMenuPermissionPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &RolePermission{}
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := &RoleMenuPermission{}
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -977,7 +977,7 @@ func testRolePermissionsSliceUpdateAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -986,18 +986,18 @@ func testRolePermissionsSliceUpdateAll(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, rolePermissionDBTypes, true, rolePermissionPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	if err = randomize.Struct(seed, o, roleMenuPermissionDBTypes, true, roleMenuPermissionPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	// Remove Primary keys and unique columns from what we plan to update
 	var fields []string
-	if strmangle.StringSliceMatch(rolePermissionAllColumns, rolePermissionPrimaryKeyColumns) {
-		fields = rolePermissionAllColumns
+	if strmangle.StringSliceMatch(roleMenuPermissionAllColumns, roleMenuPermissionPrimaryKeyColumns) {
+		fields = roleMenuPermissionAllColumns
 	} else {
 		fields = strmangle.SetComplement(
-			rolePermissionAllColumns,
-			rolePermissionPrimaryKeyColumns,
+			roleMenuPermissionAllColumns,
+			roleMenuPermissionPrimaryKeyColumns,
 		)
 	}
 
@@ -1015,7 +1015,7 @@ func testRolePermissionsSliceUpdateAll(t *testing.T) {
 		}
 	}
 
-	slice := RolePermissionSlice{o}
+	slice := RoleMenuPermissionSlice{o}
 	if rowsAff, err := slice.UpdateAll(ctx, tx, updateMap); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
@@ -1023,29 +1023,29 @@ func testRolePermissionsSliceUpdateAll(t *testing.T) {
 	}
 }
 
-func testRolePermissionsUpsert(t *testing.T) {
+func testRoleMenuPermissionsUpsert(t *testing.T) {
 	t.Parallel()
 
-	if len(rolePermissionAllColumns) == len(rolePermissionPrimaryKeyColumns) {
+	if len(roleMenuPermissionAllColumns) == len(roleMenuPermissionPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
 	// Attempt the INSERT side of an UPSERT
-	o := RolePermission{}
-	if err = randomize.Struct(seed, &o, rolePermissionDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	o := RoleMenuPermission{}
+	if err = randomize.Struct(seed, &o, roleMenuPermissionDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 	if err = o.Upsert(ctx, tx, false, nil, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert RolePermission: %s", err)
+		t.Errorf("Unable to upsert RoleMenuPermission: %s", err)
 	}
 
-	count, err := RolePermissions().Count(ctx, tx)
+	count, err := RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1054,15 +1054,15 @@ func testRolePermissionsUpsert(t *testing.T) {
 	}
 
 	// Attempt the UPDATE side of an UPSERT
-	if err = randomize.Struct(seed, &o, rolePermissionDBTypes, false, rolePermissionPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize RolePermission struct: %s", err)
+	if err = randomize.Struct(seed, &o, roleMenuPermissionDBTypes, false, roleMenuPermissionPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize RoleMenuPermission struct: %s", err)
 	}
 
 	if err = o.Upsert(ctx, tx, true, nil, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert RolePermission: %s", err)
+		t.Errorf("Unable to upsert RoleMenuPermission: %s", err)
 	}
 
-	count, err = RolePermissions().Count(ctx, tx)
+	count, err = RoleMenuPermissions().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}

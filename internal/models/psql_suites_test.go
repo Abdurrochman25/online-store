@@ -6,9 +6,13 @@ package models
 import "testing"
 
 func TestUpsert(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsUpsert)
+
+	t.Run("Menus", testMenusUpsert)
+
 	t.Run("Permissions", testPermissionsUpsert)
 
-	t.Run("RolePermissions", testRolePermissionsUpsert)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsUpsert)
 
 	t.Run("Roles", testRolesUpsert)
 

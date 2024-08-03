@@ -12,87 +12,113 @@ import "testing"
 // It does NOT run each operation group in parallel.
 // Separating the tests thusly grants avoidance of Postgres deadlocks.
 func TestParent(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissions)
+	t.Run("Menus", testMenus)
 	t.Run("Permissions", testPermissions)
-	t.Run("RolePermissions", testRolePermissions)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissions)
 	t.Run("Roles", testRoles)
 	t.Run("Users", testUsers)
 }
 
 func TestDelete(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsDelete)
+	t.Run("Menus", testMenusDelete)
 	t.Run("Permissions", testPermissionsDelete)
-	t.Run("RolePermissions", testRolePermissionsDelete)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsDelete)
 	t.Run("Roles", testRolesDelete)
 	t.Run("Users", testUsersDelete)
 }
 
 func TestQueryDeleteAll(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsQueryDeleteAll)
+	t.Run("Menus", testMenusQueryDeleteAll)
 	t.Run("Permissions", testPermissionsQueryDeleteAll)
-	t.Run("RolePermissions", testRolePermissionsQueryDeleteAll)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsQueryDeleteAll)
 	t.Run("Roles", testRolesQueryDeleteAll)
 	t.Run("Users", testUsersQueryDeleteAll)
 }
 
 func TestSliceDeleteAll(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsSliceDeleteAll)
+	t.Run("Menus", testMenusSliceDeleteAll)
 	t.Run("Permissions", testPermissionsSliceDeleteAll)
-	t.Run("RolePermissions", testRolePermissionsSliceDeleteAll)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsSliceDeleteAll)
 	t.Run("Roles", testRolesSliceDeleteAll)
 	t.Run("Users", testUsersSliceDeleteAll)
 }
 
 func TestExists(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsExists)
+	t.Run("Menus", testMenusExists)
 	t.Run("Permissions", testPermissionsExists)
-	t.Run("RolePermissions", testRolePermissionsExists)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsExists)
 	t.Run("Roles", testRolesExists)
 	t.Run("Users", testUsersExists)
 }
 
 func TestFind(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsFind)
+	t.Run("Menus", testMenusFind)
 	t.Run("Permissions", testPermissionsFind)
-	t.Run("RolePermissions", testRolePermissionsFind)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsFind)
 	t.Run("Roles", testRolesFind)
 	t.Run("Users", testUsersFind)
 }
 
 func TestBind(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsBind)
+	t.Run("Menus", testMenusBind)
 	t.Run("Permissions", testPermissionsBind)
-	t.Run("RolePermissions", testRolePermissionsBind)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsBind)
 	t.Run("Roles", testRolesBind)
 	t.Run("Users", testUsersBind)
 }
 
 func TestOne(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsOne)
+	t.Run("Menus", testMenusOne)
 	t.Run("Permissions", testPermissionsOne)
-	t.Run("RolePermissions", testRolePermissionsOne)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsOne)
 	t.Run("Roles", testRolesOne)
 	t.Run("Users", testUsersOne)
 }
 
 func TestAll(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsAll)
+	t.Run("Menus", testMenusAll)
 	t.Run("Permissions", testPermissionsAll)
-	t.Run("RolePermissions", testRolePermissionsAll)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsAll)
 	t.Run("Roles", testRolesAll)
 	t.Run("Users", testUsersAll)
 }
 
 func TestCount(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsCount)
+	t.Run("Menus", testMenusCount)
 	t.Run("Permissions", testPermissionsCount)
-	t.Run("RolePermissions", testRolePermissionsCount)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsCount)
 	t.Run("Roles", testRolesCount)
 	t.Run("Users", testUsersCount)
 }
 
 func TestHooks(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsHooks)
+	t.Run("Menus", testMenusHooks)
 	t.Run("Permissions", testPermissionsHooks)
-	t.Run("RolePermissions", testRolePermissionsHooks)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsHooks)
 	t.Run("Roles", testRolesHooks)
 	t.Run("Users", testUsersHooks)
 }
 
 func TestInsert(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsInsert)
+	t.Run("MenuPermissions", testMenuPermissionsInsertWhitelist)
+	t.Run("Menus", testMenusInsert)
+	t.Run("Menus", testMenusInsertWhitelist)
 	t.Run("Permissions", testPermissionsInsert)
 	t.Run("Permissions", testPermissionsInsertWhitelist)
-	t.Run("RolePermissions", testRolePermissionsInsert)
-	t.Run("RolePermissions", testRolePermissionsInsertWhitelist)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsInsert)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsInsertWhitelist)
 	t.Run("Roles", testRolesInsert)
 	t.Run("Roles", testRolesInsertWhitelist)
 	t.Run("Users", testUsersInsert)
@@ -100,36 +126,46 @@ func TestInsert(t *testing.T) {
 }
 
 func TestReload(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsReload)
+	t.Run("Menus", testMenusReload)
 	t.Run("Permissions", testPermissionsReload)
-	t.Run("RolePermissions", testRolePermissionsReload)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsReload)
 	t.Run("Roles", testRolesReload)
 	t.Run("Users", testUsersReload)
 }
 
 func TestReloadAll(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsReloadAll)
+	t.Run("Menus", testMenusReloadAll)
 	t.Run("Permissions", testPermissionsReloadAll)
-	t.Run("RolePermissions", testRolePermissionsReloadAll)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsReloadAll)
 	t.Run("Roles", testRolesReloadAll)
 	t.Run("Users", testUsersReloadAll)
 }
 
 func TestSelect(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsSelect)
+	t.Run("Menus", testMenusSelect)
 	t.Run("Permissions", testPermissionsSelect)
-	t.Run("RolePermissions", testRolePermissionsSelect)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsSelect)
 	t.Run("Roles", testRolesSelect)
 	t.Run("Users", testUsersSelect)
 }
 
 func TestUpdate(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsUpdate)
+	t.Run("Menus", testMenusUpdate)
 	t.Run("Permissions", testPermissionsUpdate)
-	t.Run("RolePermissions", testRolePermissionsUpdate)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsUpdate)
 	t.Run("Roles", testRolesUpdate)
 	t.Run("Users", testUsersUpdate)
 }
 
 func TestSliceUpdateAll(t *testing.T) {
+	t.Run("MenuPermissions", testMenuPermissionsSliceUpdateAll)
+	t.Run("Menus", testMenusSliceUpdateAll)
 	t.Run("Permissions", testPermissionsSliceUpdateAll)
-	t.Run("RolePermissions", testRolePermissionsSliceUpdateAll)
+	t.Run("RoleMenuPermissions", testRoleMenuPermissionsSliceUpdateAll)
 	t.Run("Roles", testRolesSliceUpdateAll)
 	t.Run("Users", testUsersSliceUpdateAll)
 }

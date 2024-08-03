@@ -12,7 +12,7 @@ import (
 
 type IAuthRepository interface {
 	FindByEmail(ctx context.Context, loginRequest *authModels.LoginRequest) (*models.User, error)
-	FindRolePermissionByUserID(ctx context.Context, userID int) (models.RolePermissionSlice, error)
+	FindPermissionByUserID(ctx context.Context, userID int) (*models.User, error)
 }
 
 type authRepository struct{}
@@ -36,7 +36,7 @@ func (r *authRepository) FindByEmail(ctx context.Context, loginRequest *authMode
 	return user, nil
 }
 
-func (r *authRepository) FindRolePermissionByUserID(ctx context.Context, userID int) (models.RolePermissionSlice, error) {
-	return models.RolePermissions(Where("user_id=?", userID)).
-		All(ctx, boil.GetContextDB())
+func (r *authRepository) FindPermissionByUserID(ctx context.Context, userID int) (*models.User, error) {
+	return models.Users(Where("user_id=?", userID)).
+		One(ctx, boil.GetContextDB())
 }

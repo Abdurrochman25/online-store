@@ -33,6 +33,7 @@ type User struct {
 	CreatedAt           null.Time   `boil:"created_at" json:"created_at,omitempty" toml:"created_at" yaml:"created_at,omitempty"`
 	UpdatedAt           null.Time   `boil:"updated_at" json:"updated_at,omitempty" toml:"updated_at" yaml:"updated_at,omitempty"`
 	DeletedAt           null.Time   `boil:"deleted_at" json:"deleted_at,omitempty" toml:"deleted_at" yaml:"deleted_at,omitempty"`
+	IsLoggedIn          bool        `boil:"is_logged_in" json:"is_logged_in" toml:"is_logged_in" yaml:"is_logged_in"`
 
 	R *userR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L userL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -48,6 +49,7 @@ var UserColumns = struct {
 	CreatedAt           string
 	UpdatedAt           string
 	DeletedAt           string
+	IsLoggedIn          string
 }{
 	ID:                  "id",
 	Name:                "name",
@@ -58,6 +60,7 @@ var UserColumns = struct {
 	CreatedAt:           "created_at",
 	UpdatedAt:           "updated_at",
 	DeletedAt:           "deleted_at",
+	IsLoggedIn:          "is_logged_in",
 }
 
 var UserTableColumns = struct {
@@ -70,6 +73,7 @@ var UserTableColumns = struct {
 	CreatedAt           string
 	UpdatedAt           string
 	DeletedAt           string
+	IsLoggedIn          string
 }{
 	ID:                  "users.id",
 	Name:                "users.name",
@@ -80,9 +84,19 @@ var UserTableColumns = struct {
 	CreatedAt:           "users.created_at",
 	UpdatedAt:           "users.updated_at",
 	DeletedAt:           "users.deleted_at",
+	IsLoggedIn:          "users.is_logged_in",
 }
 
 // Generated where
+
+type whereHelperbool struct{ field string }
+
+func (w whereHelperbool) EQ(x bool) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperbool) NEQ(x bool) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperbool) LT(x bool) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperbool) LTE(x bool) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperbool) GT(x bool) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperbool) GTE(x bool) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
 
 var UserWhere = struct {
 	ID                  whereHelperint
@@ -94,6 +108,7 @@ var UserWhere = struct {
 	CreatedAt           whereHelpernull_Time
 	UpdatedAt           whereHelpernull_Time
 	DeletedAt           whereHelpernull_Time
+	IsLoggedIn          whereHelperbool
 }{
 	ID:                  whereHelperint{field: "\"users\".\"id\""},
 	Name:                whereHelpernull_String{field: "\"users\".\"name\""},
@@ -104,6 +119,7 @@ var UserWhere = struct {
 	CreatedAt:           whereHelpernull_Time{field: "\"users\".\"created_at\""},
 	UpdatedAt:           whereHelpernull_Time{field: "\"users\".\"updated_at\""},
 	DeletedAt:           whereHelpernull_Time{field: "\"users\".\"deleted_at\""},
+	IsLoggedIn:          whereHelperbool{field: "\"users\".\"is_logged_in\""},
 }
 
 // UserRels is where relationship names are stored.
@@ -134,8 +150,8 @@ func (r *userR) GetRole() *Role {
 type userL struct{}
 
 var (
-	userAllColumns            = []string{"id", "name", "email", "password", "last_authenticated_at", "role_id", "created_at", "updated_at", "deleted_at"}
-	userColumnsWithoutDefault = []string{}
+	userAllColumns            = []string{"id", "name", "email", "password", "last_authenticated_at", "role_id", "created_at", "updated_at", "deleted_at", "is_logged_in"}
+	userColumnsWithoutDefault = []string{"is_logged_in"}
 	userColumnsWithDefault    = []string{"id", "name", "email", "password", "last_authenticated_at", "role_id", "created_at", "updated_at", "deleted_at"}
 	userPrimaryKeyColumns     = []string{"id"}
 	userGeneratedColumns      = []string{}

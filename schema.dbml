@@ -4,6 +4,7 @@ Table users {
     email varchar(50)
     password varchar(50)
     last_authenticated_at timestamp
+    is_logged_in bool
     role_id int2
     created_at timestamp
     updated_at timestamp
@@ -22,10 +23,25 @@ Table permissions {
     created_at timestamp
 }
 
-Table role_permissions {
+Table menus {
+    id serial [primary key]
+    name varchar(20)
+    slug varchar(50)
+    created_at timestamp
+    updated_at timestamp
+    deleted_at timestamp
+}
+
+Table menu_permissions {
+    id serial [primary key]
+    menu_id int2
+    permission_id int2
+}
+
+Table role_menu_permissions {
     id serial [primary key]
     role_id int2
-    permission_id int2
+    menu_permission_id int2
 }
 
 Table customers {
